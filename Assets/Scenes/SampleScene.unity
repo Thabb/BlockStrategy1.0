@@ -307,13 +307,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 56518533}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -3.125, y: 0, z: 0}
-  m_LocalScale: {x: 0.3125, y: 5, z: 0.5555556}
+  m_LocalScale: {x: 0.5555556, y: 5, z: 0.3125}
   m_Children: []
   m_Father: {fileID: 1775049275}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &56518538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,6 +435,7 @@ GameObject:
   - component: {fileID: 843036311}
   - component: {fileID: 843036310}
   - component: {fileID: 843036309}
+  - component: {fileID: 843036313}
   m_Layer: 0
   m_Name: RedBase
   m_TagString: Untagged
@@ -511,13 +512,29 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 843036308}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 3.125, y: 0, z: 0}
-  m_LocalScale: {x: 0.3125, y: 5, z: 0.5555556}
+  m_LocalScale: {x: 0.5555555, y: 5, z: 0.3125}
   m_Children: []
   m_Father: {fileID: 1775049275}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &843036313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843036308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2ceebd37def8ec4b9a6ebb3ac64ae7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 2
+  soldierPrefab: {fileID: 1095964754971723564, guid: 954b279851b5be7418f608c035e40546, type: 3}
+  archerPrefab: {fileID: 7686410084174279023, guid: 025545c5885a3bf45ad0802dba7ca058, type: 3}
+  lancerPrefab: {fileID: 7398872971096892494, guid: df54e8542eb31854c8b0bb5c2125917f, type: 3}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

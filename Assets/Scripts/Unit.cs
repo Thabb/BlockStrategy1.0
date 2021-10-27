@@ -10,9 +10,6 @@ public class Unit : MonoBehaviour
 {
     public Rigidbody rb;
 
-    public Material blueTeamTexture;
-    public Material redTeamTexture;
-    
     public int team;
     
     public int damage;
@@ -25,21 +22,8 @@ public class Unit : MonoBehaviour
 
     void Start()
     {
-        SetColor();
         // sets the destination to the spawn point
         destPoint = transform.position;
-    }
-
-    private void SetColor()
-    {
-        if (team == 1)
-        {
-            gameObject.GetComponent<MeshRenderer>().material = blueTeamTexture;
-        }
-        else if (team == 2)
-        {
-            gameObject.GetComponent<MeshRenderer>().material = redTeamTexture;
-        }
     }
 
     void Update()

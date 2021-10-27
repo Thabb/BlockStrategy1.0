@@ -11,13 +11,6 @@ public class Base : MonoBehaviour
     public GameObject archerPrefab;
     public GameObject lancerPrefab;
 
-    void Start()
-    {   
-        soldierPrefab.GetComponent<Unit>().team = team;
-        archerPrefab.GetComponent<Unit>().team = team;
-        lancerPrefab.GetComponent<Unit>().team = team;
-    }
-
     void Update()
     {
         UnitGeneration();
@@ -50,7 +43,7 @@ public class Base : MonoBehaviour
     }
     
     private void GenerateArcher()
-    {
+    { 
         Instantiate(archerPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0), Quaternion.identity);
     }
     
