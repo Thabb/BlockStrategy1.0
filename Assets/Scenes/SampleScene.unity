@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 56518538}
   m_Layer: 0
   m_Name: BlueBase
-  m_TagString: Untagged
+  m_TagString: Structure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -452,6 +452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ab88719cc58d846936fa4f12e67676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controlledUnit: {fileID: 0}
 --- !u!4 &726548711
 Transform:
   m_ObjectHideFlags: 0
@@ -481,7 +482,7 @@ GameObject:
   - component: {fileID: 843036313}
   m_Layer: 0
   m_Name: RedBase
-  m_TagString: Untagged
+  m_TagString: Structure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -899,7 +900,7 @@ GameObject:
   - component: {fileID: 1775049272}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
