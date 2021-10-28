@@ -1,12 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
-public class Unit : MonoBehaviour
+public class Unit : HealthEntity
 {
     public Rigidbody rb;
 
@@ -20,13 +15,14 @@ public class Unit : MonoBehaviour
     public NavMeshAgent nav;
     public Vector3 destPoint;
 
-    void Start()
+    private void Start()
     {
+        base.Start();
         // sets the destination to the spawn point
         destPoint = transform.position;
     }
 
-    void Update()
+    private void Update()
     {
         Movement();
         Combat();

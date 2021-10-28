@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Base : MonoBehaviour
+public class Base : HealthEntity
 {
     public int team;
     
@@ -11,7 +8,7 @@ public class Base : MonoBehaviour
     public GameObject archerPrefab;
     public GameObject lancerPrefab;
 
-    void Update()
+    private void Update()
     {
         UnitGeneration();
     }
