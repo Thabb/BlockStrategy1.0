@@ -27,10 +27,16 @@ public class PlayerInputController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, 200))
             {
+                if (controlledUnit)
+                {
+                    controlledUnit.GetComponent<HealthEntity>().healthBar.gameObject.SetActive(false);
+                }
+                
                 if (hit.transform.gameObject.CompareTag("Unit") && hit.transform.gameObject.GetComponent<Unit>().team == 1)
                 {
                     Debug.Log("Unit found!");
                     controlledUnit = hit.transform.gameObject;
+                    controlledUnit.GetComponent<HealthEntity>().healthBar.gameObject.SetActive(true);
                 }
             }
         }
@@ -46,8 +52,6 @@ public class PlayerInputController : MonoBehaviour
                 // transcribe the x and z value of the hit in a new Vector
                 Vector3 destination = hit.point;
                 destination.y = 1;
-                
-                Debug.Log(destination);
 
                 // case: clicked on open ground
                 if (hit.transform.gameObject.CompareTag("Ground"))
