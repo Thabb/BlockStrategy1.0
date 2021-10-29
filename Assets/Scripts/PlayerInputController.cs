@@ -1,17 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class PlayerInputController : MonoBehaviour
 {
 
     public GameObject controlledUnit;
-    
-    void Start()
-    {
-        
-    }
-    
+
+    public Image dragBox;
+    private Vector2 _leftMouseDownPosition;
+    private Vector2 _leftMouseUpPosition;
+
     void Update()
     {
         MouseClicks();
@@ -22,6 +24,12 @@ public class PlayerInputController : MonoBehaviour
         // left mouse click
         if (Input.GetMouseButtonDown(0))
         {
+            // set corner 1 for the dragBox
+            _leftMouseDownPosition = Input.mousePosition;
+            dragBox.gameObject.SetActive(true);
+
+            // under this comment is the stuff needed for a one-click
+            // TODO: maybe rewrite this once the drag select stuff is done
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -30,6 +38,7 @@ public class PlayerInputController : MonoBehaviour
                 if (controlledUnit)
                 {
                     controlledUnit.GetComponent<HealthEntity>().healthBar.gameObject.SetActive(false);
+                    controlledUnit = null;
                 }
                 
                 if (hit.transform.gameObject.CompareTag("Unit") && hit.transform.gameObject.GetComponent<Unit>().team == 1)
@@ -39,6 +48,18 @@ public class PlayerInputController : MonoBehaviour
                     controlledUnit.GetComponent<HealthEntity>().healthBar.gameObject.SetActive(true);
                 }
             }
+        }
+        
+        if (Input.GetMouseButton(0))
+        {
+            dragBox.rectTransform.sizeDelta= new Vector2(Mathf.Abs(_leftMouseDownPosition.x - Input.mousePosition.x), Mathf.Abs(_leftMouseDownPosition.y - Input.mousePosition.y));
+            dragBox.rectTransform.position = new Vector2((_leftMouseDownPosition.x + Input.mousePosition.x) / 2, (_leftMouseDownPosition.y + Input.mousePosition.y)/2);
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            _leftMouseUpPosition = Input.mousePosition;
+            dragBox.gameObject.SetActive(false);
         }
         
         // right mouse click
@@ -54,7 +75,7 @@ public class PlayerInputController : MonoBehaviour
                 destination.y = 1;
 
                 // case: clicked on open ground
-                if (hit.transform.gameObject.CompareTag("Ground"))
+                if (hit.transform.gameObject.CompareTag("Ground") && controlledUnit)
                 {
                     controlledUnit.GetComponent<Unit>().destPoint = destination;
                 }
