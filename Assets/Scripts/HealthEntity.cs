@@ -13,7 +13,6 @@ public abstract class HealthEntity : MonoBehaviour
     public void Start()
     {
         healthBar.SetHealth(this);
-        Debug.Log(maxHealth);
     }
 
     public void TakeDamage(float incomingDamage)
