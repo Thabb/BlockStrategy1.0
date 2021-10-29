@@ -477,7 +477,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &148092018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -769,6 +769,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlledUnit: {fileID: 0}
   dragBox: {fileID: 388683462}
+  _activeUnits: []
 --- !u!4 &726548711
 Transform:
   m_ObjectHideFlags: 0

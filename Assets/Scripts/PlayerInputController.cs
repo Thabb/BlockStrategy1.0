@@ -14,6 +14,9 @@ public class PlayerInputController : MonoBehaviour
     private Vector2 _leftMouseDownPosition;
     private Vector2 _leftMouseUpPosition;
 
+    // list of units that exist at that moment
+    public List<Unit> _activeUnits;
+
     void Update()
     {
         MouseClicks();
@@ -58,8 +61,11 @@ public class PlayerInputController : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            // save mouse up position and deactivate dragBox
             _leftMouseUpPosition = Input.mousePosition;
             dragBox.gameObject.SetActive(false);
+            
+            // TODO: Check if any untis are in the area of the dragBox
         }
         
         // right mouse click
@@ -91,5 +97,16 @@ public class PlayerInputController : MonoBehaviour
                 
             }
         }
+        
+    }
+    
+    public void AddActiveUnit(Unit unit)
+    {
+        _activeUnits.Add(unit);
+    }
+
+    public void RemoveActiveUnit(Unit unit)
+    {
+        _activeUnits.Remove(unit);
     }
 }
