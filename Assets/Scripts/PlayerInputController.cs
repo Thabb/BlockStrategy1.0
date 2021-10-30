@@ -12,12 +12,16 @@ public class PlayerInputController : MonoBehaviour
 
     public Image dragBox;
     private Vector3 _leftMouseDownPosition;
-    private Vector3 _leftMouseUpPosition;
 
     // list of units that exist at that moment
     private List<Unit> _activeUnits = new List<Unit>();
     
-    private Camera mainCam = Camera.main;
+    private Camera _mainCam;
+
+    void Start()
+    {
+        _mainCam = Camera.main;
+    }
 
     void Update()
     {
@@ -32,13 +36,20 @@ public class PlayerInputController : MonoBehaviour
             // set corner 1 for the dragBox
             _leftMouseDownPosition = Input.mousePosition;
             dragBox.gameObject.SetActive(true);
+        }
+        
+        if (Input.GetMouseButton(0))
+        {
+            dragBox.rectTransform.sizeDelta= new Vector2(Mathf.Abs(_leftMouseDownPosition.x - Input.mousePosition.x), Mathf.Abs(_leftMouseDownPosition.y - Input.mousePosition.y));
+            dragBox.rectTransform.position = new Vector2((_leftMouseDownPosition.x + Input.mousePosition.x) / 2, (_leftMouseDownPosition.y + Input.mousePosition.y)/2);
+        }
 
+        if (Input.GetMouseButtonUp(0))
+        {
             // under this comment is the stuff needed for a one-click
-            // TODO: maybe rewrite this once the drag select stuff is done
-            Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            Ray ray = _mainCam.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit, 200))
+            if (Physics.Raycast(ray, out RaycastHit hit, 200))
             {
                 if (controlledUnits.Count != 0)
                 {
@@ -55,16 +66,8 @@ public class PlayerInputController : MonoBehaviour
                     controlledUnits[0].GetComponent<HealthEntity>().healthBar.gameObject.SetActive(true);
                 }
             }
-        }
-        
-        if (Input.GetMouseButton(0))
-        {
-            dragBox.rectTransform.sizeDelta= new Vector2(Mathf.Abs(_leftMouseDownPosition.x - Input.mousePosition.x), Mathf.Abs(_leftMouseDownPosition.y - Input.mousePosition.y));
-            dragBox.rectTransform.position = new Vector2((_leftMouseDownPosition.x + Input.mousePosition.x) / 2, (_leftMouseDownPosition.y + Input.mousePosition.y)/2);
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
+            
+            // drag select stuff
             // deactivate dragBox
             dragBox.gameObject.SetActive(false);
 
@@ -73,7 +76,7 @@ public class PlayerInputController : MonoBehaviour
 
             foreach (Unit unit in _activeUnits)
             {
-                Vector3 unitPos = mainCam.WorldToScreenPoint(unit.transform.position);
+                Vector3 unitPos = _mainCam.WorldToScreenPoint(unit.transform.position);
 
                 if (unitPos.x >= min.x && unitPos.x <= max.x && unitPos.y >= min.y && unitPos.y <= max.y)
                 {
@@ -81,13 +84,12 @@ public class PlayerInputController : MonoBehaviour
                     unit.GetComponent<HealthEntity>().healthBar.gameObject.SetActive(true);
                 }
             }
-
         }
         
         // right mouse click
         else if (Input.GetMouseButtonDown(1))
         {
-            Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
+            Ray ray = _mainCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             
             if (Physics.Raycast(ray, out hit, 200))
