@@ -1,5 +1,7 @@
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.AI;
+using Vector3 = UnityEngine.Vector3;
 
 public class Unit : HealthEntity
 {
@@ -17,7 +19,9 @@ public class Unit : HealthEntity
 
     public PlayerInputController playerInputController;
 
-    private void Start()
+    private bool isInCombat { get; set; } = false;
+
+    private new void Start()
     {
         base.Start();
         // sets the destination to the spawn point
@@ -33,8 +37,14 @@ public class Unit : HealthEntity
 
     private void Update()
     {
-        Movement();
-        Combat();
+        if (isInCombat)
+        {
+            Combat();
+        }
+        else
+        {
+            Movement();
+        }
     }
 
     private void Movement()
@@ -44,7 +54,16 @@ public class Unit : HealthEntity
 
     private void Combat()
     {
+        // TODO: Update the destPoint all the time to make up for enemy movement
         
+        if (Vector3.Distance(transform.position, destPoint) < range * 10)
+        {
+            nav.destination = transform.position;
+        }
+        else
+        {
+            nav.destination = destPoint;
+        }
     }
 
     private void DestroySelf()
