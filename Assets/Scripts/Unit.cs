@@ -19,7 +19,10 @@ public class Unit : HealthEntity
 
     public PlayerInputController playerInputController;
 
-    private bool isInCombat { get; set; } = false;
+    //private bool isInCombat { get; set; } = false;
+    public bool isInCombat = false;
+    //private Unit enemy;
+    public Unit enemy;
 
     private new void Start()
     {
@@ -54,9 +57,9 @@ public class Unit : HealthEntity
 
     private void Combat()
     {
-        // TODO: Update the destPoint all the time to make up for enemy movement
+        destPoint = enemy.transform.position;
         
-        if (Vector3.Distance(transform.position, destPoint) < range * 10)
+        if (Vector3.Distance(transform.position, destPoint) < range)
         {
             nav.destination = transform.position;
         }
