@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Numerics;
 using UnityEngine;
 using UnityEngine.AI;
@@ -24,6 +26,8 @@ public class Unit : HealthEntity
     //private Unit enemy;
     public Unit enemy;
 
+    private double lastAttackTime = 0;
+
     private new void Start()
     {
         base.Start();
@@ -48,6 +52,7 @@ public class Unit : HealthEntity
         {
             Movement();
         }
+        
     }
 
     private void Movement()
@@ -57,7 +62,15 @@ public class Unit : HealthEntity
 
     private void Combat()
     {
-        destPoint = enemy.transform.position;
+        if (enemy)
+        {
+            destPoint = enemy.transform.position;
+        }
+        else
+        {
+            destPoint = transform.position;
+            isInCombat = false;
+        }
         
         if (Vector3.Distance(transform.position, destPoint) < range)
         {
@@ -72,16 +85,25 @@ public class Unit : HealthEntity
 
     private void Attack()
     {
-        // TODO: Add intervall for attacking
-
-        enemy.TakeDamage(damage);
+        if (lastAttackTime + attackSpeed <= DateTimeOffset.Now.ToUnixTimeSeconds())
+        {
+            enemy.TakeDamage(this, damage);
+            lastAttackTime = DateTimeOffset.Now.ToUnixTimeSeconds();
+        }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(Unit attacker, float damage)
     {
-        // TODO: if unit is not already in combat, set in combat against its attacker
         // TODO: include proper damage calculation
-        currentHealth -= damage;
+        base.TakeDamage(damage);
+        
+        if (currentHealth <= 0) DestroySelf();
+        
+        if (!isInCombat)
+        {
+            isInCombat = true;
+            enemy = attacker;
+        }
     }
 
     private void DestroySelf()
@@ -91,5 +113,7 @@ public class Unit : HealthEntity
         {
             playerInputController.RemoveActiveUnit(this);
         }
+        
+        Destroy(gameObject);
     }
 }
