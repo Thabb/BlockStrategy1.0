@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class Base : HealthEntity
 {
-    public int team;
-    
     public GameObject soldierPrefab;
     public GameObject archerPrefab;
     public GameObject lancerPrefab;

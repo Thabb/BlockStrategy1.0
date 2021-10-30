@@ -9,8 +9,6 @@ public class Unit : HealthEntity
 {
     public Rigidbody rb;
 
-    public int team;
-    
     public int damage;
     public int range;
     public int attackSpeed;

@@ -99,24 +99,34 @@ public class PlayerInputController : MonoBehaviour
                 Vector3 destination = hit.point;
                 destination.y = 1;
 
+                Unit entity = hit.transform.GetComponent<Unit>();
+                
                 // case: clicked on open ground
                 if (hit.transform.gameObject.CompareTag("Ground") && controlledUnits.Count != 0)
                 {
                     foreach (Unit unit in controlledUnits)
                     {
                         unit.destPoint = destination;
+                        unit.isInCombat = false;
+                        unit.enemy = null;
                     }
                 }
                 
                 // TODO: case: clicked on friendly unit or structure
                 
 
-                // TODO: case: clicked on enemy unit or structure
-
+                // case: clicked on enemy unit
+                else if (hit.transform.gameObject.CompareTag("Unit") &&
+                         entity.team != 0 && controlledUnits.Count != 0)
+                {
+                    foreach (Unit unit in controlledUnits)
+                    {
+                        unit.isInCombat = true;
+                        unit.enemy = entity;
+                    }
+                }
 
                 // TODO: case: clicked on enemy structure
-                
-                
             }
         }
         

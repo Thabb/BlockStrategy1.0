@@ -10,6 +10,8 @@ public abstract class HealthEntity : MonoBehaviour
     public float maxHealth;
     public float currentHealth;
 
+    public int team;
+
     public void Start()
     {
         healthBar.SetHealth(this);
