@@ -62,11 +62,26 @@ public class Unit : HealthEntity
         if (Vector3.Distance(transform.position, destPoint) < range)
         {
             nav.destination = transform.position;
+            Attack();
         }
         else
         {
             nav.destination = destPoint;
         }
+    }
+
+    private void Attack()
+    {
+        // TODO: Add intervall for attacking
+
+        enemy.TakeDamage(damage);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        // TODO: if unit is not already in combat, set in combat against its attacker
+        // TODO: include proper damage calculation
+        currentHealth -= damage;
     }
 
     private void DestroySelf()
