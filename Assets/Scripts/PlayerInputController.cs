@@ -55,7 +55,7 @@ public class PlayerInputController : MonoBehaviour
                 {
                     foreach (Unit unit in controlledUnits)
                     {
-                        unit.healthBar.gameObject.SetActive(false);
+                        if (unit) unit.healthBar.gameObject.SetActive(false);
                     }
                     controlledUnits.Clear();
                 }
