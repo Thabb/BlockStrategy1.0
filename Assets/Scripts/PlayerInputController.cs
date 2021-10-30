@@ -8,14 +8,14 @@ using UnityEngine.UI;
 public class PlayerInputController : MonoBehaviour
 {
 
-    public GameObject controlledUnit;
+    public List<GameObject> controlledUnits = new List<GameObject>();
 
     public Image dragBox;
-    private Vector2 _leftMouseDownPosition;
-    private Vector2 _leftMouseUpPosition;
+    private Vector3 _leftMouseDownPosition;
+    private Vector3 _leftMouseUpPosition;
 
     // list of units that exist at that moment
-    public List<Unit> _activeUnits;
+    private List<Unit> _activeUnits = new List<Unit>();
 
     void Update()
     {
@@ -38,17 +38,19 @@ public class PlayerInputController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, 200))
             {
-                if (controlledUnit)
+                if (controlledUnits.Count != 0)
                 {
-                    controlledUnit.GetComponent<HealthEntity>().healthBar.gameObject.SetActive(false);
-                    controlledUnit = null;
+                    foreach (GameObject unit in controlledUnits)
+                    {
+                        unit.GetComponent<HealthEntity>().healthBar.gameObject.SetActive(false);
+                    }
+                    controlledUnits.Clear();
                 }
                 
                 if (hit.transform.gameObject.CompareTag("Unit") && hit.transform.gameObject.GetComponent<Unit>().team == 1)
                 {
-                    Debug.Log("Unit found!");
-                    controlledUnit = hit.transform.gameObject;
-                    controlledUnit.GetComponent<HealthEntity>().healthBar.gameObject.SetActive(true);
+                    controlledUnits.Add(hit.transform.gameObject);
+                    controlledUnits[0].GetComponent<HealthEntity>().healthBar.gameObject.SetActive(true);
                 }
             }
         }
@@ -61,11 +63,23 @@ public class PlayerInputController : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            // save mouse up position and deactivate dragBox
-            _leftMouseUpPosition = Input.mousePosition;
+            // deactivate dragBox
             dragBox.gameObject.SetActive(false);
-            
-            // TODO: Check if any untis are in the area of the dragBox
+
+            Vector2 min = dragBox.rectTransform.anchoredPosition - (dragBox.rectTransform.sizeDelta / 2);
+            Vector2 max = dragBox.rectTransform.anchoredPosition + (dragBox.rectTransform.sizeDelta / 2);
+
+            foreach (Unit unit in _activeUnits)
+            {
+                Vector3 unitPos = Camera.main.WorldToScreenPoint(unit.transform.position);
+
+                if (unitPos.x >= min.x && unitPos.x <= max.x && unitPos.y >= min.y && unitPos.y <= max.y)
+                {
+                    controlledUnits.Add(unit.gameObject);
+                    unit.GetComponent<HealthEntity>().healthBar.gameObject.SetActive(true);
+                }
+            }
+
         }
         
         // right mouse click
@@ -81,9 +95,12 @@ public class PlayerInputController : MonoBehaviour
                 destination.y = 1;
 
                 // case: clicked on open ground
-                if (hit.transform.gameObject.CompareTag("Ground") && controlledUnit)
+                if (hit.transform.gameObject.CompareTag("Ground") && controlledUnits.Count != 0)
                 {
-                    controlledUnit.GetComponent<Unit>().destPoint = destination;
+                    foreach (GameObject unit in controlledUnits)
+                    {
+                        unit.GetComponent<Unit>().destPoint = destination;
+                    }
                 }
                 
                 // TODO: case: clicked on friendly unit or structure
@@ -109,4 +126,9 @@ public class PlayerInputController : MonoBehaviour
     {
         _activeUnits.Remove(unit);
     }
+    
+    private bool IsCBetweenAB (Vector2 A , Vector2 B , Vector2 C ) {
+        return Vector2.Dot( (B-A).normalized , (C-B).normalized )<0f && Vector2.Dot( (A-B).normalized , (C-A).normalized )<0f;
+    }
+
 }
