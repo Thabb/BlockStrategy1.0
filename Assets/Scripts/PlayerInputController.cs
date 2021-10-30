@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class PlayerInputController : MonoBehaviour
 {
 
-    public List<GameObject> controlledUnits = new List<GameObject>();
+    public List<Unit> controlledUnits = new List<Unit>();
 
     public Image dragBox;
     private Vector3 _leftMouseDownPosition;
@@ -53,17 +53,18 @@ public class PlayerInputController : MonoBehaviour
             {
                 if (controlledUnits.Count != 0)
                 {
-                    foreach (GameObject unit in controlledUnits)
+                    foreach (Unit unit in controlledUnits)
                     {
-                        unit.GetComponent<HealthEntity>().healthBar.gameObject.SetActive(false);
+                        unit.healthBar.gameObject.SetActive(false);
                     }
                     controlledUnits.Clear();
                 }
-                
-                if (hit.transform.gameObject.CompareTag("Unit") && hit.transform.gameObject.GetComponent<Unit>().team == 1)
+
+                Unit hitUnit = hit.transform.gameObject.GetComponent<Unit>();
+                if (hit.transform.gameObject.CompareTag("Unit") && hitUnit.team == 1)
                 {
-                    controlledUnits.Add(hit.transform.gameObject);
-                    controlledUnits[0].GetComponent<HealthEntity>().healthBar.gameObject.SetActive(true);
+                    controlledUnits.Add(hitUnit);
+                    controlledUnits[0].healthBar.gameObject.SetActive(true);
                 }
             }
             
@@ -80,8 +81,8 @@ public class PlayerInputController : MonoBehaviour
 
                 if (unitPos.x >= min.x && unitPos.x <= max.x && unitPos.y >= min.y && unitPos.y <= max.y)
                 {
-                    controlledUnits.Add(unit.gameObject);
-                    unit.GetComponent<HealthEntity>().healthBar.gameObject.SetActive(true);
+                    controlledUnits.Add(unit);
+                    unit.healthBar.gameObject.SetActive(true);
                 }
             }
         }
@@ -101,9 +102,9 @@ public class PlayerInputController : MonoBehaviour
                 // case: clicked on open ground
                 if (hit.transform.gameObject.CompareTag("Ground") && controlledUnits.Count != 0)
                 {
-                    foreach (GameObject unit in controlledUnits)
+                    foreach (Unit unit in controlledUnits)
                     {
-                        unit.GetComponent<Unit>().destPoint = destination;
+                        unit.destPoint = destination;
                     }
                 }
                 
