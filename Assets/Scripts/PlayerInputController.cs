@@ -16,6 +16,8 @@ public class PlayerInputController : MonoBehaviour
 
     // list of units that exist at that moment
     private List<Unit> _activeUnits = new List<Unit>();
+    
+    private Camera mainCam = Camera.main;
 
     void Update()
     {
@@ -33,7 +35,7 @@ public class PlayerInputController : MonoBehaviour
 
             // under this comment is the stuff needed for a one-click
             // TODO: maybe rewrite this once the drag select stuff is done
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, 200))
@@ -71,7 +73,7 @@ public class PlayerInputController : MonoBehaviour
 
             foreach (Unit unit in _activeUnits)
             {
-                Vector3 unitPos = Camera.main.WorldToScreenPoint(unit.transform.position);
+                Vector3 unitPos = mainCam.WorldToScreenPoint(unit.transform.position);
 
                 if (unitPos.x >= min.x && unitPos.x <= max.x && unitPos.y >= min.y && unitPos.y <= max.y)
                 {
@@ -85,7 +87,7 @@ public class PlayerInputController : MonoBehaviour
         // right mouse click
         else if (Input.GetMouseButtonDown(1))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             
             if (Physics.Raycast(ray, out hit, 200))
@@ -126,9 +128,4 @@ public class PlayerInputController : MonoBehaviour
     {
         _activeUnits.Remove(unit);
     }
-    
-    private bool IsCBetweenAB (Vector2 A , Vector2 B , Vector2 C ) {
-        return Vector2.Dot( (B-A).normalized , (C-B).normalized )<0f && Vector2.Dot( (A-B).normalized , (C-A).normalized )<0f;
-    }
-
 }
