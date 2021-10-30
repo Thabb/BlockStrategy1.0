@@ -26,7 +26,7 @@ public class Unit : HealthEntity
     //private Unit enemy;
     public Unit enemy;
 
-    private double lastAttackTime = 0;
+    private double _lastAttackTime = 0;
 
     private new void Start()
     {
@@ -42,7 +42,7 @@ public class Unit : HealthEntity
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (isInCombat)
         {
@@ -85,10 +85,10 @@ public class Unit : HealthEntity
 
     private void Attack()
     {
-        if (lastAttackTime + attackSpeed <= DateTimeOffset.Now.ToUnixTimeSeconds())
+        if (_lastAttackTime + attackSpeed <= DateTimeOffset.Now.ToUnixTimeSeconds())
         {
             enemy.TakeDamage(this, damage);
-            lastAttackTime = DateTimeOffset.Now.ToUnixTimeSeconds();
+            _lastAttackTime = DateTimeOffset.Now.ToUnixTimeSeconds();
         }
     }
 
