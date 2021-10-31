@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 using UnityEngine.AI;
-using Vector3 = UnityEngine.Vector3;
 
 public class Unit : HealthEntity
 {
