@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Android;
 
@@ -8,6 +10,29 @@ public class Base : HealthEntity
     public GameObject archerPrefab;
     public GameObject lancerPrefab;
 
+    private new void Start()
+    {
+        base.Start();
+        StartCoroutine(HealthRegeneration());
+    }
+
+    private IEnumerator HealthRegeneration()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            if (currentHealth + 10 <= maxHealth)
+            {
+                currentHealth += 10;
+                healthBar.SetHealth(this);
+            } else if (currentHealth < maxHealth && currentHealth + 10 > maxHealth)
+            {
+                currentHealth = maxHealth;
+                healthBar.SetHealth(this);
+            }
+        }
+    }
+    
     private void Update()
     {
         UnitGeneration();
