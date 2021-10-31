@@ -22,5 +22,12 @@ public abstract class HealthEntity : MonoBehaviour
     {
         currentHealth -= incomingDamage;
         healthBar.SetHealth(this);
+        
+        if (currentHealth <= 0) DestroySelf();
+    }
+
+    private void DestroySelf()
+    {
+        Destroy(gameObject);
     }
 }

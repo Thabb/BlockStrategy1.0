@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Android;
 
 public class Base : HealthEntity
 {
@@ -45,5 +47,18 @@ public class Base : HealthEntity
     private void GenerateLancer()
     {
         Instantiate(lancerPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0), Quaternion.identity);
+    }
+
+    private void OnDestroy()
+    {
+        // TODO: If one base was destroyed the game should end and depending on whos base its was the player will see a "You won" or "You lost" message (UI)
+        if (team == 1)
+        {
+            Debug.Log("YOU LOST!");
+        } else if (team == 2)
+        {
+            Debug.Log("YOU WON!");
+        }
+        Application.Quit();
     }
 }

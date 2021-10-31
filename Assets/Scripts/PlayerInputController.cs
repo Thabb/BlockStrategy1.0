@@ -99,7 +99,7 @@ public class PlayerInputController : MonoBehaviour
                 Vector3 destination = hit.point;
                 destination.y = 1;
 
-                Unit entity = hit.transform.GetComponent<Unit>();
+                HealthEntity entity = hit.transform.GetComponent<HealthEntity>();
                 
                 // case: clicked on open ground
                 if (hit.transform.gameObject.CompareTag("Ground") && controlledUnits.Count != 0)
@@ -117,8 +117,8 @@ public class PlayerInputController : MonoBehaviour
                 // TODO: case: clicked on friendly unit or structure
                 
 
-                // case: clicked on enemy unit
-                else if (hit.transform.gameObject.CompareTag("Unit") &&
+                // case: clicked on enemy unit or structure
+                else if ((hit.transform.gameObject.CompareTag("Unit") || hit.transform.gameObject.CompareTag("Structure")) &&
                          entity.team != 0 && controlledUnits.Count != 0)
                 {
                     foreach (Unit unit in controlledUnits)
@@ -127,8 +127,6 @@ public class PlayerInputController : MonoBehaviour
                         unit.enemy = entity;
                     }
                 }
-
-                // TODO: case: clicked on enemy structure
             }
         }
         

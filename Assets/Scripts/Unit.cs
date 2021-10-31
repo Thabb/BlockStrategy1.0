@@ -123,9 +123,7 @@ public class Unit : HealthEntity
     {
         // TODO: include proper damage calculation
         base.TakeDamage(damage);
-        
-        if (currentHealth <= 0) DestroySelf();
-        
+
         if (!isInCombat)
         {
             // before the unit is set into combat mode it is checked if the unit has a pending movement command
@@ -144,22 +142,13 @@ public class Unit : HealthEntity
         enemy = attacker;
     }
 
-    private void DestroySelf()
+    private void OnDestroy()
     {
-        // remove the unit from its enemies list of near enemies
-        if (enemy is Unit)
-        {
-            Unit uEnemy = (Unit) enemy;
-            uEnemy.OnTriggerExit(transform.GetComponent<Collider>());
-        }
-        
         // if this is a player unit, remove it from the list of active units
         if (team == 1)
         {
             playerInputController.RemoveActiveUnit(this);
         }
-        
-        Destroy(gameObject);
     }
 
     private bool IsMoving()
@@ -176,6 +165,8 @@ public class Unit : HealthEntity
             // check for nearest enemy and set into combat against that enemy
             Unit nearestEnemy = null;
             float distanceToNearestEnemy = 25; // placeholder value way slightly above the 20 radius of the trigger
+
+            enemiesInSight.RemoveAll(unit => !unit); // remove all units that where destroyed (are null)
             foreach (Unit enemyinSight in enemiesInSight)
             {
                 if (Vector3.Distance(enemyinSight.transform.position, transform.position) < distanceToNearestEnemy)
