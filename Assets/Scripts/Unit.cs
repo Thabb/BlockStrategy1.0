@@ -99,9 +99,15 @@ public class Unit : HealthEntity
         
         if (!isInCombat)
         {
-            isInCombat = true;
-            enemy = attacker;
+            StartCoroutine(SetIntoCombat(attacker));
         }
+    }
+
+    private IEnumerator SetIntoCombat(Unit attacker)
+    {
+        yield return new WaitForSeconds(0.5f);
+        isInCombat = true;
+        enemy = attacker;
     }
 
     private void DestroySelf()
