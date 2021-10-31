@@ -13,6 +13,8 @@ public abstract class HealthEntity : MonoBehaviour
 
     public int team;
 
+    private bool isAlive = true;
+
     public void Start()
     {
         healthBar.SetHealth(this);
@@ -28,6 +30,7 @@ public abstract class HealthEntity : MonoBehaviour
 
     private void DestroySelf()
     {
-        Destroy(gameObject);
+        if (isAlive) Destroy(gameObject);
+        isAlive = false;
     }
 }
