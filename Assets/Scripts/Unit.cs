@@ -22,7 +22,7 @@ public class Unit : HealthEntity
     //private bool isInCombat { get; set; } = false;
     public bool isInCombat = false;
     //private Unit enemy;
-    public Unit enemy;
+    public HealthEntity enemy;
 
     private double _lastAttackTime = 0;
 
@@ -106,7 +106,15 @@ public class Unit : HealthEntity
     {
         if (_lastAttackTime + attackSpeed <= DateTimeOffset.Now.ToUnixTimeSeconds())
         {
-            enemy.TakeDamage(this, damage);
+            if (enemy is Unit)
+            {
+                Unit uEnemy = (Unit) enemy;
+                uEnemy.TakeDamage(this, damage);
+            }
+            else
+            {
+                enemy.TakeDamage(damage);
+            }
             _lastAttackTime = DateTimeOffset.Now.ToUnixTimeSeconds();
         }
     }
@@ -138,8 +146,12 @@ public class Unit : HealthEntity
 
     private void DestroySelf()
     {
-        // remove the unit from its enemys list of near enemies
-        enemy.OnTriggerExit(transform.GetComponent<Collider>());
+        // remove the unit from its enemies list of near enemies
+        if (enemy is Unit)
+        {
+            Unit uEnemy = (Unit) enemy;
+            uEnemy.OnTriggerExit(transform.GetComponent<Collider>());
+        }
         
         // if this is a player unit, remove it from the list of active units
         if (team == 1)
