@@ -70,6 +70,7 @@ public class Unit : HealthEntity
             isInCombat = false;
         }
         
+        // TODO: Check if this is easier done with NavMeshAgent.stoppingDistance
         if (Vector3.Distance(transform.position, destPoint) < range)
         {
             nav.destination = transform.position;
@@ -99,7 +100,12 @@ public class Unit : HealthEntity
         
         if (!isInCombat)
         {
-            StartCoroutine(SetIntoCombat(attacker));
+            // before the unit is set into combat mode it is checked if the unit has a pending movement command
+            // if so, its not set into combat mode until this path is complete
+            if (nav.remainingDistance <= nav.stoppingDistance + 1)
+            {
+                StartCoroutine(SetIntoCombat(attacker));
+            }
         }
     }
 

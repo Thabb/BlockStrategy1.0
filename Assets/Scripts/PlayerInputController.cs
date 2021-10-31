@@ -107,6 +107,8 @@ public class PlayerInputController : MonoBehaviour
                     foreach (Unit unit in controlledUnits)
                     {
                         unit.destPoint = destination;
+                        
+                        // get unit out of combat mode
                         unit.isInCombat = false;
                         unit.enemy = null;
                     }
