@@ -66,23 +66,7 @@ public class Unit : HealthEntity
             enemiesInSight.Add(enter);
         }
 
-        if (!IsMoving() && enemiesInSight.Count != 0)
-        {
-            // check for nearest enemy and set into combat against that enemy
-            Unit nearestEnemy = null;
-            float distanceToNearestEnemy = 25; // placeholder value way slightly above the 20 radius of the trigger
-            foreach (Unit enemyinSight in enemiesInSight)
-            {
-                if (Vector3.Distance(enemyinSight.transform.position, transform.position) < distanceToNearestEnemy)
-                {
-                    nearestEnemy = enemyinSight;
-                    distanceToNearestEnemy = Vector3.Distance(enemyinSight.transform.position, transform.position);
-                }
-            }
-
-            enemy = nearestEnemy;
-            isInCombat = true;
-        }
+        CheckForEnemiesNearYou();
     }
 
     private void OnTriggerExit(Collider other)
@@ -104,8 +88,7 @@ public class Unit : HealthEntity
         }
         else
         {
-            destPoint = transform.position;
-            isInCombat = false;
+            CheckForEnemiesNearYou();
         }
         
         // TODO: Check if this is easier done with NavMeshAgent.stoppingDistance
@@ -171,5 +154,33 @@ public class Unit : HealthEntity
     private bool IsMoving()
     {
         return !(nav.remainingDistance <= nav.stoppingDistance + 1);
+    }
+
+    private void CheckForEnemiesNearYou()
+    {
+        if (IsMoving()) return;
+        
+        if (enemiesInSight.Count != 0)
+        {
+            // check for nearest enemy and set into combat against that enemy
+            Unit nearestEnemy = null;
+            float distanceToNearestEnemy = 25; // placeholder value way slightly above the 20 radius of the trigger
+            foreach (Unit enemyinSight in enemiesInSight)
+            {
+                if (Vector3.Distance(enemyinSight.transform.position, transform.position) < distanceToNearestEnemy)
+                {
+                    nearestEnemy = enemyinSight;
+                    distanceToNearestEnemy = Vector3.Distance(enemyinSight.transform.position, transform.position);
+                }
+            }
+
+            enemy = nearestEnemy;
+            isInCombat = true;
+        }
+        else
+        {
+            destPoint = transform.position;
+            isInCombat = false;
+        }
     }
 }
