@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 using UnityEngine.AI;
@@ -26,6 +27,8 @@ public class Unit : HealthEntity
 
     private double _lastAttackTime = 0;
 
+    public List<Unit> enemiesInSight = new List<Unit>();
+
     private new void Start()
     {
         base.Start();
@@ -51,6 +54,41 @@ public class Unit : HealthEntity
             Movement();
         }
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.isTrigger) return;
+        if (!other.transform.TryGetComponent(out Unit enter)) return;
+        
+        if (enter.team != team)
+        {
+            enemiesInSight.Add(enter);
+        }
+
+        if (!IsMoving() && enemiesInSight.Count != 0)
+        {
+            // check for nearest enemy and set into combat against that enemy
+            Unit nearestEnemy = null;
+            float distanceToNearestEnemy = 25; // placeholder value way slightly above the 20 radius of the trigger
+            foreach (Unit enemyinSight in enemiesInSight)
+            {
+                if (Vector3.Distance(enemyinSight.transform.position, transform.position) < distanceToNearestEnemy)
+                {
+                    nearestEnemy = enemyinSight;
+                    distanceToNearestEnemy = Vector3.Distance(enemyinSight.transform.position, transform.position);
+                }
+            }
+
+            enemy = nearestEnemy;
+            isInCombat = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Unit exit = other.transform.GetComponent<Unit>();
+        enemiesInSight.Remove(exit);
     }
 
     private void Movement()
@@ -102,7 +140,7 @@ public class Unit : HealthEntity
         {
             // before the unit is set into combat mode it is checked if the unit has a pending movement command
             // if so, its not set into combat mode until this path is complete
-            if (nav.remainingDistance <= nav.stoppingDistance + 1)
+            if (!IsMoving())
             {
                 StartCoroutine(SetIntoCombat(attacker));
             }
@@ -118,6 +156,9 @@ public class Unit : HealthEntity
 
     private void DestroySelf()
     {
+        // remove the unit from its enemys list of near enemies
+        enemy.OnTriggerExit(transform.GetComponent<Collider>());
+        
         // if this is a player unit, remove it from the list of active units
         if (team == 1)
         {
@@ -125,5 +166,10 @@ public class Unit : HealthEntity
         }
         
         Destroy(gameObject);
+    }
+
+    private bool IsMoving()
+    {
+        return !(nav.remainingDistance <= nav.stoppingDistance + 1);
     }
 }

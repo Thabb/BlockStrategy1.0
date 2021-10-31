@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1095964754971723560}
   - component: {fileID: 1095964754971723563}
   - component: {fileID: 1095964754971723562}
+  - component: {fileID: -4965178654688723744}
   - component: {fileID: 1095964754971723565}
   - component: {fileID: 645437196835842448}
   m_Layer: 0
@@ -116,6 +117,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!135 &-4965178654688723744
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095964754971723564}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 20
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!114 &1095964754971723565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,14 +145,17 @@ MonoBehaviour:
   healthBar: {fileID: 2070947362878818428}
   maxHealth: 100
   currentHealth: 100
-  rb: {fileID: 1095964754971723562}
   team: 2
+  rb: {fileID: 1095964754971723562}
   damage: 5
   range: 5
   attackSpeed: 2
   armor: 5
   nav: {fileID: 645437196835842448}
   destPoint: {x: 0, y: 0, z: 0}
+  playerInputController: {fileID: 0}
+  isInCombat: 0
+  enemy: {fileID: 0}
 --- !u!195 &645437196835842448
 NavMeshAgent:
   m_ObjectHideFlags: 0
