@@ -9,6 +9,7 @@ public abstract class HealthEntity : MonoBehaviour
     
     public float maxHealth;
     public float currentHealth;
+    public float armor;
 
     public int team;
 

@@ -13,7 +13,6 @@ public class Unit : HealthEntity
     public int damage;
     public int range;
     public int attackSpeed;
-    public int armor;
 
     public NavMeshAgent nav;
     public Vector3 destPoint;
