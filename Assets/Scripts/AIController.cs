@@ -58,6 +58,20 @@ public class AIController : MonoBehaviour
         }
     }
 
+    private List<Unit> GetAllCurrentlyInactiveUnits()
+    {
+        List<Unit> inactiveUnits = new List<Unit>();
+        foreach (Unit ownUnit in ownUnits)
+        {
+            if (!ownUnit.isInCombat)
+            {
+                inactiveUnits.Add(ownUnit);
+            }
+        }
+
+        return inactiveUnits;
+    }
+
     public void AddOwnUnit(Unit unit)
     {
         ownUnits.Add(unit);
