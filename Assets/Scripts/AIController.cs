@@ -49,6 +49,15 @@ public class AIController : MonoBehaviour
         }
     }
 
+    private void SendTroopsAgainst(Unit enemy)
+    {
+        foreach (Unit ownUnit in ownUnits)
+        {
+            ownUnit.isInCombat = true;
+            ownUnit.enemy = enemy;
+        }
+    }
+
     public void AddOwnUnit(Unit unit)
     {
         ownUnits.Add(unit);
