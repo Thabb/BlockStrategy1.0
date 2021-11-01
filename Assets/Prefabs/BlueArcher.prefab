@@ -145,17 +145,18 @@ MonoBehaviour:
   healthBar: {fileID: 6796645304187861396}
   maxHealth: 50
   currentHealth: 50
+  attackDamage: 15
+  armor: 5
+  range: 20
+  attackSpeed: 1.5
   team: 1
   rb: {fileID: 7686410084174279021}
-  damage: 5
-  range: 50
-  attackSpeed: 2
-  armor: 1
   nav: {fileID: 9052494767411162337}
   destPoint: {x: 0, y: 0, z: 0}
   playerInputController: {fileID: 0}
   isInCombat: 0
   enemy: {fileID: 0}
+  enemiesInSight: []
 --- !u!195 &9052494767411162337
 NavMeshAgent:
   m_ObjectHideFlags: 0

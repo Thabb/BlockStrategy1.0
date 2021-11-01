@@ -143,19 +143,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 8273317340498187368}
-  maxHealth: 200
-  currentHealth: 200
+  maxHealth: 150
+  currentHealth: 150
+  attackDamage: 10
+  armor: 20
+  range: 5
+  attackSpeed: 1
   team: 1
   rb: {fileID: 7398872971096892492}
-  damage: 3
-  range: 10
-  attackSpeed: 3
-  armor: 10
   nav: {fileID: 5485193711506936732}
   destPoint: {x: 0, y: 0, z: 0}
   playerInputController: {fileID: 0}
   isInCombat: 0
   enemy: {fileID: 0}
+  enemiesInSight: []
 --- !u!195 &5485193711506936732
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -8,10 +8,6 @@ public class Unit : HealthEntity
 {
     public Rigidbody rb;
 
-    public int damage;
-    public int range;
-    public int attackSpeed;
-
     public NavMeshAgent nav;
     public Vector3 destPoint;
 
@@ -107,11 +103,11 @@ public class Unit : HealthEntity
             if (enemy is Unit)
             {
                 Unit uEnemy = (Unit) enemy;
-                uEnemy.TakeDamage(this, damage);
+                uEnemy.TakeDamage(this, attackDamage);
             }
             else
             {
-                enemy.TakeDamage(damage);
+                enemy.TakeDamage(attackDamage);
             }
             _lastAttackTime = DateTimeOffset.Now.ToUnixTimeSeconds();
         }

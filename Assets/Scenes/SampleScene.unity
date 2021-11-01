@@ -475,7 +475,10 @@ MonoBehaviour:
   healthBar: {fileID: 258335856}
   maxHealth: 5000
   currentHealth: 5000
-  armor: 0
+  attackDamage: 50
+  armor: 10
+  range: 20
+  attackSpeed: 1
   team: 1
   soldierPrefab: {fileID: 1095964754971723564, guid: e9b7ec2bf5e5ad14a808f3a13a0573a7, type: 3}
   archerPrefab: {fileID: 7686410084174279023, guid: b0caa7cc79eaaa44e94abeea068ed7bf, type: 3}
@@ -916,7 +919,10 @@ MonoBehaviour:
   healthBar: {fileID: 54804718}
   maxHealth: 5000
   currentHealth: 5000
-  armor: 0
+  attackDamage: 50
+  armor: 10
+  range: 20
+  attackSpeed: 1
   team: 2
   soldierPrefab: {fileID: 1095964754971723564, guid: 954b279851b5be7418f608c035e40546, type: 3}
   archerPrefab: {fileID: 7686410084174279023, guid: 025545c5885a3bf45ad0802dba7ca058, type: 3}
