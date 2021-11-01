@@ -4,24 +4,40 @@ using UnityEngine;
 
 public class AIController : MonoBehaviour
 {
+    public Base enemyBase;
+    
     private List<Unit> ownUnits = new List<Unit>();
     private List<Unit> enemyUnits = new List<Unit>();
 
     private Tuple<Vector3, Vector3> dangerZone = new Tuple<Vector3, Vector3>(new Vector3(80,0,-45), new Vector3(-50,0,45));
-
-    // Start is called before the first frame update
-    void Start()
+    
+    private void Update()
     {
-        
+        DecisionMaking();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void DecisionMaking()
     {
-        
+        Unit closestUnit = GetClosestEnemyUnit();
+
+        // 1. Clear a circle with a radius of 30 around the base from all enemy units.
+        if (Vector3.Distance(closestUnit.transform.position, transform.position) < 30)
+        {
+            SendTroopsAgainst(closestUnit);
+        }
+        // 2. Clear the danger zone from all enemy units.
+        else if (closestUnit.transform.position.x < dangerZone.Item1.y && closestUnit.transform.position.x > dangerZone.Item2.x && closestUnit.transform.position.z > dangerZone.Item1.z && closestUnit.transform.position.z < dangerZone.Item2.z)
+        {
+            SendTroopsAgainst(closestUnit);
+        }
+        // 3. Attack the enemy base.
+        else
+        {
+            SendTroopsAgainst(enemyBase);
+        }
     }
 
-    private Unit CheckForClosestUnit()
+    private Unit GetClosestEnemyUnit()
     {
         Unit closestUnit = null;
         float clostestDistance = 1000000000; // 1 billion, a number so high that no real unit should ever be that far away
@@ -52,7 +68,7 @@ public class AIController : MonoBehaviour
         }
     }
 
-    private void SendTroopsAgainst(Unit enemy)
+    private void SendTroopsAgainst(HealthEntity enemy)
     {
         foreach (Unit ownUnit in ownUnits)
         {
