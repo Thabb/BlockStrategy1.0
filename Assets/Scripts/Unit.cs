@@ -11,7 +11,8 @@ public class Unit : HealthEntity
     public NavMeshAgent nav;
     public Vector3 destPoint;
 
-    public PlayerInputController playerInputController;
+    private PlayerInputController playerInputController;
+    private AIController aiController;
 
     //private bool isInCombat { get; set; } = false;
     public bool isInCombat = false;
@@ -28,11 +29,17 @@ public class Unit : HealthEntity
         // sets the destination to the spawn point
         destPoint = transform.position;
 
-        // if this is a player unit, add it to the list of active units
+        // add this units to different lists of the controllers depending which side its on
+        aiController = FindObjectOfType<AIController>();
+        playerInputController = FindObjectOfType<PlayerInputController>();
         if (team == 1)
         {
-            playerInputController = FindObjectOfType<PlayerInputController>();
             playerInputController.AddActiveUnit(this);
+            
+            aiController.AddEnemyUnit(this);
+        } else if (team == 2)
+        {
+            aiController.AddOwnUnit(this);
         }
     }
 
@@ -142,6 +149,10 @@ public class Unit : HealthEntity
         if (team == 1)
         {
             playerInputController.RemoveActiveUnit(this);
+            aiController.RemoveEnemyUnit(this);
+        } else if (team == 2)
+        {
+            aiController.RemoveOwnUnit(this);
         }
     }
 
