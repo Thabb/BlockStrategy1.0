@@ -36,6 +36,19 @@ public class AIController : MonoBehaviour
         return closestUnit;
     }
 
+    private void SendTroopsToPosition(Vector3 destination)
+    {
+        foreach (Unit ownUnit in ownUnits)
+        {
+            // send unit on its way
+            ownUnit.destPoint = destination;
+            
+            // get unit out of combat mode
+            ownUnit.isInCombat= false;
+            ownUnit.enemy = null;
+        }
+    }
+
     public void AddOwnUnit(Unit unit)
     {
         ownUnits.Add(unit);
