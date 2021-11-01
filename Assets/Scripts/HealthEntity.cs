@@ -22,7 +22,7 @@ public abstract class HealthEntity : MonoBehaviour
 
     public void TakeDamage(float incomingDamage)
     {
-        currentHealth -= incomingDamage;
+        currentHealth -= (incomingDamage/armor) * 10;
         healthBar.SetHealth(this);
         
         if (currentHealth <= 0) DestroySelf();
