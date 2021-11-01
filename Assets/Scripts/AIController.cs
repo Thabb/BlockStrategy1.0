@@ -18,6 +18,24 @@ public class AIController : MonoBehaviour
         
     }
 
+    private Unit CheckForClosestUnit()
+    {
+        Unit closestUnit = null;
+        float clostestDistance = 1000000000; // 1 billion, a number so high that no real unit should ever be that far away
+
+        foreach (Unit enemyUnit in enemyUnits)
+        {
+            float distance = Vector3.Distance(transform.position, enemyUnit.transform.position);
+            if (distance < clostestDistance)
+            {
+                clostestDistance = distance;
+                closestUnit = enemyUnit;
+            }
+        }
+
+        return closestUnit;
+    }
+
     public void AddOwnUnit(Unit unit)
     {
         ownUnits.Add(unit);
