@@ -107,6 +107,8 @@ public class Unit : HealthEntity
     {
         if (_lastAttackTime + attackSpeed <= DateTimeOffset.Now.ToUnixTimeSeconds())
         {
+            if (!enemy) return;
+            
             if (enemy is Unit)
             {
                 Unit uEnemy = (Unit) enemy;

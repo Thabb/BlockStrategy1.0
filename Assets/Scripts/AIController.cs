@@ -20,6 +20,9 @@ public class AIController : MonoBehaviour
     {
         Unit closestUnit = GetClosestEnemyUnit();
 
+        // if there is no enemy you shall not proceed
+        if (!closestUnit) return;
+        
         // 1. Clear a circle with a radius of 30 around the base from all enemy units.
         if (Vector3.Distance(closestUnit.transform.position, transform.position) < 30)
         {
