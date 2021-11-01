@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ public class AIController : MonoBehaviour
 {
     private List<Unit> ownUnits = new List<Unit>();
     private List<Unit> enemyUnits = new List<Unit>();
+
+    private Tuple<Vector3, Vector3> dangerZone = new Tuple<Vector3, Vector3>(new Vector3(80,0,-45), new Vector3(-50,0,45));
 
     // Start is called before the first frame update
     void Start()
