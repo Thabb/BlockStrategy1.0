@@ -23,11 +23,23 @@ public class ResourcePoint : MonoBehaviour
         // should take a few seconds of repeated input
     }
     
+    /// <summary>
+    /// Asyc method to passivly generate income for the owner of the point, if there is one.
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator GenerateResourcesForOwner()
     {
         while (true)
         {
-            // There should be a reference to a resource handler for the owning team
+            if (ownerTeam == 1)
+            {
+                blueBase.Gold += generationAmount;
+            } else if (ownerTeam == 2)
+            {
+                redBase.Gold += generationAmount;
+            }
+
+            yield return new WaitForSeconds(1);
         }
     }
 }
