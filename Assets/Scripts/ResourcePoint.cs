@@ -58,6 +58,8 @@ public class ResourcePoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.isTrigger == true) return;
+        
         if (other.TryGetComponent(out Unit unit))
         {
             unitsOnThePoint.Add(unit);
@@ -66,6 +68,8 @@ public class ResourcePoint : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.isTrigger == true) return;
+
         if (other.TryGetComponent(out Unit unit))
         {
             unitsOnThePoint.Remove(unit);
