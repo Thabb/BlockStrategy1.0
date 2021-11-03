@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,13 +8,13 @@ public class ResourcePoint : MonoBehaviour
     // TODO: add reference to some kind of resource handler of the owning team
     public Base blueBase;
     public Base redBase;
-    private int ownerTeam;
+    private int ownerTeam = 0;
 
-    private List<Unit> unitsOnThePoints = new List<Unit>();
+    private List<Unit> unitsOnThePoint = new List<Unit>();
 
     public float generationAmount;
     
-    void Start()
+    private void Start()
     {
         StartCoroutine(GenerateResourcesForOwner());
     }
@@ -23,6 +24,22 @@ public class ResourcePoint : MonoBehaviour
         // should take a few seconds of repeated input
     }
     
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out Unit unit))
+        {
+            unitsOnThePoint.Add(unit);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out Unit unit))
+        {
+            unitsOnThePoint.Remove(unit);
+        }
+    }
+
     /// <summary>
     /// Asyc method to passivly generate income for the owner of the point, if there is one.
     /// </summary>
