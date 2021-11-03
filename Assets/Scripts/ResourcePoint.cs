@@ -8,9 +8,9 @@ public class ResourcePoint : MonoBehaviour
     // TODO: add reference to some kind of resource handler of the owning team
     public Base blueBase;
     public Base redBase;
-    private int ownerTeam = 0;
+    public int ownerTeam = 0; // TODO: Change back to private once testing is done
 
-    private List<Unit> unitsOnThePoint = new List<Unit>();
+    public List<Unit> unitsOnThePoint = new List<Unit>(); // TODO: Change back to private once testing is done
 
     public float generationAmount;
     
@@ -35,9 +35,8 @@ public class ResourcePoint : MonoBehaviour
             }
         }
 
-        if (overtakable)
+        if (overtakable && unitsOnThePoint.Count > 0)
         {
-            
             OvertakePoint();
         }
     }
