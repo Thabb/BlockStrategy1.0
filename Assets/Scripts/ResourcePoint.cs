@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ResourcePoint : MonoBehaviour
@@ -27,7 +28,7 @@ public class ResourcePoint : MonoBehaviour
     {
         bool overtakable = true;
         
-        foreach (Unit unit in unitsOnThePoint)
+        foreach (Unit unit in unitsOnThePoint.ToList())
         {
             if (!unit)
             {
