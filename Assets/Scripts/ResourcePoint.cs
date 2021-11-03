@@ -5,15 +5,15 @@ using UnityEngine;
 public class ResourcePoint : MonoBehaviour
 {
     // TODO: add reference to some kind of resource handler of the owning team
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Base blueBase;
+    public Base redBase;
+    private int ownerTeam;
 
-    // Update is called once per frame
-    void Update()
+    private List<Unit> unitsOnThePoints = new List<Unit>();
+
+    public float generationAmount;
+    
+    void Start()
     {
         StartCoroutine(GenerateResourcesForOwner());
     }
