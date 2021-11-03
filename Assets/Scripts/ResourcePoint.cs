@@ -13,10 +13,14 @@ public class ResourcePoint : MonoBehaviour
     public List<Unit> unitsOnThePoint = new List<Unit>(); // TODO: Change back to private once testing is done
 
     public float generationAmount;
+
+    private Renderer _colorRenderer;
     
     private void Start()
     {
         StartCoroutine(GenerateResourcesForOwner());
+
+        _colorRenderer = gameObject.GetComponent<Renderer>();
     }
 
     private void FixedUpdate()
@@ -53,11 +57,21 @@ public class ResourcePoint : MonoBehaviour
             2 => 1,
             _ => 0
         };
+
+        switch (ownerTeam)
+        {
+            case 1:
+                _colorRenderer.material.color = Color.blue;
+                break;
+            case 2:
+                _colorRenderer.material.color = Color.red;
+                break;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.isTrigger == true) return;
+        if (other.isTrigger) return;
         
         if (other.TryGetComponent(out Unit unit))
         {
@@ -67,7 +81,7 @@ public class ResourcePoint : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.isTrigger == true) return;
+        if (other.isTrigger) return;
 
         if (other.TryGetComponent(out Unit unit))
         {
