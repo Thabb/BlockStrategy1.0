@@ -19,11 +19,43 @@ public class ResourcePoint : MonoBehaviour
         StartCoroutine(GenerateResourcesForOwner());
     }
 
-    private void OvertakePoint()
+    private void FixedUpdate()
     {
-        // should take a few seconds of repeated input
+        bool overtakable = true;
+        
+        foreach (Unit unit in unitsOnThePoint)
+        {
+            if (!unit)
+            {
+                unitsOnThePoint.Remove(unit);
+            }
+            else if (unit.team == ownerTeam)
+            {
+                overtakable = false;
+            }
+        }
+
+        if (overtakable)
+        {
+            
+            OvertakePoint();
+        }
     }
     
+    /// <summary>
+    /// This function is only called if the point should be overtaken. It switches the ownerTeam to the new owner.
+    /// </summary>
+    private void OvertakePoint()
+    {
+        ownerTeam = ownerTeam switch
+        {
+            0 => unitsOnThePoint[0].team,
+            1 => 2,
+            2 => 1,
+            _ => 0
+        };
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out Unit unit))
