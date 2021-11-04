@@ -548,6 +548,7 @@ MonoBehaviour:
   soldierPrefab: {fileID: 1095964754971723564, guid: e9b7ec2bf5e5ad14a808f3a13a0573a7, type: 3}
   archerPrefab: {fileID: 7686410084174279023, guid: b0caa7cc79eaaa44e94abeea068ed7bf, type: 3}
   lancerPrefab: {fileID: 7398872971096892494, guid: 90f3f1197e42fa84d8f1b9230d36e8e7, type: 3}
+  goldCounter: {fileID: 1107972179}
 --- !u!1 &86658967
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,7 +631,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 86658970}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 56518538}
+        m_TargetAssemblyTypeName: Base, Assembly-CSharp
+        m_MethodName: GenerateSoldier
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &86658970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1326,6 +1339,7 @@ MonoBehaviour:
   soldierPrefab: {fileID: 1095964754971723564, guid: 954b279851b5be7418f608c035e40546, type: 3}
   archerPrefab: {fileID: 7686410084174279023, guid: 025545c5885a3bf45ad0802dba7ca058, type: 3}
   lancerPrefab: {fileID: 7398872971096892494, guid: df54e8542eb31854c8b0bb5c2125917f, type: 3}
+  goldCounter: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1491,7 +1505,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1056164455}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 56518538}
+        m_TargetAssemblyTypeName: Base, Assembly-CSharp
+        m_MethodName: GenerateArcher
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1056164455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1564,7 +1590,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -25}
+  m_AnchoredPosition: {x: 110, y: -30}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1107972179
@@ -1621,7 +1647,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -2330,7 +2356,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1508271050}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 56518538}
+        m_TargetAssemblyTypeName: Base, Assembly-CSharp
+        m_MethodName: GenerateLancer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1508271050
 MonoBehaviour:
   m_ObjectHideFlags: 0

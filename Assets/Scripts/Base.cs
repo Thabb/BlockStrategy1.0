@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class Base : HealthEntity
@@ -7,7 +8,8 @@ public class Base : HealthEntity
     public GameObject archerPrefab;
     public GameObject lancerPrefab;
 
-    public float Gold { get; set;  } = 200;
+    private float Gold = 200;
+    public TMP_Text goldCounter;
 
     private new void Start()
     {
@@ -75,7 +77,7 @@ public class Base : HealthEntity
         if (Gold >= 30)
         {
             Instantiate(soldierPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0), Quaternion.identity);
-            Gold -= 30;
+            ChangeGoldAmount(-30);
         }
         else
         {
@@ -88,7 +90,7 @@ public class Base : HealthEntity
         if (Gold >= 50)
         {
             Instantiate(archerPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0), Quaternion.identity);
-            Gold -= 50;
+            ChangeGoldAmount(-50);
         }
         else
         {
@@ -101,7 +103,7 @@ public class Base : HealthEntity
         if (Gold >= 60)
         {
             Instantiate(lancerPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0), Quaternion.identity);
-            Gold -= 60;
+            ChangeGoldAmount(-60);
         }
         else
         {
@@ -109,9 +111,10 @@ public class Base : HealthEntity
         }
     }
 
-    public void AddGold(float gold)
+    public void ChangeGoldAmount(float gold)
     {
         Gold += gold;
+        goldCounter.text = "Gold: " + Gold;
     }
     
     private void OnDestroy()
