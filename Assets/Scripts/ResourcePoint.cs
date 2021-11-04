@@ -100,10 +100,10 @@ public class ResourcePoint : MonoBehaviour
         {
             if (ownerTeam == 1)
             {
-                blueBase.Gold += generationAmount;
+                blueBase.AddGold(generationAmount);
             } else if (ownerTeam == 2)
             {
-                redBase.Gold += generationAmount;
+                redBase.AddGold(generationAmount);
             }
 
             yield return new WaitForSeconds(1);
