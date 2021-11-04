@@ -7,7 +7,7 @@ public class Base : HealthEntity
     public GameObject archerPrefab;
     public GameObject lancerPrefab;
 
-    public float Gold;
+    public float Gold = 200;
 
     private new void Start()
     {
@@ -70,19 +70,43 @@ public class Base : HealthEntity
         }
     }
 
-    private void GenerateSoldier()
+    public void GenerateSoldier()
     {
-        Instantiate(soldierPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0), Quaternion.identity);
+        if (Gold >= 30)
+        {
+            Instantiate(soldierPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0), Quaternion.identity);
+            Gold -= 30;
+        }
+        else
+        {
+            Debug.Log("Not enough gold to build soldier!");
+        }
     }
     
-    private void GenerateArcher()
-    { 
-        Instantiate(archerPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0), Quaternion.identity);
+    public void GenerateArcher()
+    {
+        if (Gold >= 50)
+        {
+            Instantiate(archerPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0), Quaternion.identity);
+            Gold -= 50;
+        }
+        else
+        {
+            Debug.Log("Not enough gold to build archer!");
+        }
     }
     
-    private void GenerateLancer()
+    public void GenerateLancer()
     {
-        Instantiate(lancerPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0), Quaternion.identity);
+        if (Gold >= 60)
+        {
+            Instantiate(lancerPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0), Quaternion.identity);
+            Gold -= 60;
+        }
+        else
+        {
+            Debug.Log("Not enough gold to build lancer!");
+        }
     }
 
     public void AddGold(float gold)
