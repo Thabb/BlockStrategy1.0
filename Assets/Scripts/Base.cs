@@ -7,7 +7,7 @@ public class Base : HealthEntity
     public GameObject archerPrefab;
     public GameObject lancerPrefab;
 
-    public float Gold = 200;
+    public float Gold { get; set;  } = 200;
 
     private new void Start()
     {
