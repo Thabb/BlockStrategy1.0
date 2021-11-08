@@ -8,13 +8,14 @@ public class Base : HealthEntity
     public GameObject archerPrefab;
     public GameObject lancerPrefab;
 
-    private float Gold = 200;
+    private float Gold = 0;
     public TMP_Text goldCounter;
 
     private new void Start()
     {
         base.Start();
         StartCoroutine(HealthRegeneration());
+        ChangeGoldAmount(200);
     }
 
     private IEnumerator HealthRegeneration()
