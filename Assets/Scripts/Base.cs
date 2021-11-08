@@ -8,7 +8,7 @@ public class Base : HealthEntity
     public GameObject archerPrefab;
     public GameObject lancerPrefab;
 
-    private float Gold = 0;
+    public float Gold { get; set; }= 0;
     public TMP_Text goldCounter;
 
     private new void Start()
@@ -35,7 +35,7 @@ public class Base : HealthEntity
         }
     }
 
-    public void GenerateSoldier()
+    public bool GenerateSoldier()
     {
         // check if spawn position is free
         // the position is the position in front of the the base, slightly offset on the y-axis to avoid spawning in the ground
@@ -45,14 +45,15 @@ public class Base : HealthEntity
         {
             Instantiate(soldierPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0), Quaternion.identity);
             ChangeGoldAmount(-30);
+            return true;
         }
         else
         {
-            Debug.Log("Not enough gold to build soldier!");
+            return false;
         }
     }
     
-    public void GenerateArcher()
+    public bool GenerateArcher()
     {
         // check if spawn position is free
         // the position is the position in front of the the base, slightly offset on the y-axis to avoid spawning in the ground
@@ -62,14 +63,15 @@ public class Base : HealthEntity
         {
             Instantiate(archerPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0), Quaternion.identity);
             ChangeGoldAmount(-50);
+            return true;
         }
         else
         {
-            Debug.Log("Not enough gold to build archer!");
+            return false;
         }
     }
     
-    public void GenerateLancer()
+    public bool GenerateLancer()
     {
         // check if spawn position is free
         // the position is the position in front of the the base, slightly offset on the y-axis to avoid spawning in the ground
@@ -79,10 +81,11 @@ public class Base : HealthEntity
         {
             Instantiate(lancerPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0), Quaternion.identity);
             ChangeGoldAmount(-60);
+            return true;
         }
         else
         {
-            Debug.Log("Not enough gold to build lancer!");
+            return false;
         }
     }
 
