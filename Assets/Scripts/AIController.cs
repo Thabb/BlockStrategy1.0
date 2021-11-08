@@ -19,20 +19,21 @@ public class AIController : MonoBehaviour
     private void DecisionMaking()
     {
         Unit closestUnit = GetClosestEnemyUnit();
-
-        // if there is no enemy you shall not proceed
-        if (!closestUnit) return;
         
-        // 1. Clear a circle with a radius of 30 around the base from all enemy units.
-        if (Vector3.Distance(closestUnit.transform.position, transform.position) < 30)
+        if (closestUnit)
         {
-            SendTroopsAgainst(closestUnit);
+            // 1. Clear a circle with a radius of 30 around the base from all enemy units.
+            if (Vector3.Distance(closestUnit.transform.position, transform.position) < 30)
+            {
+                SendTroopsAgainst(closestUnit);
+            }
+            // 2. Clear the danger zone from all enemy units.
+            else if (closestUnit.transform.position.x < dangerZone.Item1.y && closestUnit.transform.position.x > dangerZone.Item2.x && closestUnit.transform.position.z > dangerZone.Item1.z && closestUnit.transform.position.z < dangerZone.Item2.z)
+            {
+                SendTroopsAgainst(closestUnit);
+            }
         }
-        // 2. Clear the danger zone from all enemy units.
-        else if (closestUnit.transform.position.x < dangerZone.Item1.y && closestUnit.transform.position.x > dangerZone.Item2.x && closestUnit.transform.position.z > dangerZone.Item1.z && closestUnit.transform.position.z < dangerZone.Item2.z)
-        {
-            SendTroopsAgainst(closestUnit);
-        }
+
         // 3. Attack the enemy base.
         else
         {
