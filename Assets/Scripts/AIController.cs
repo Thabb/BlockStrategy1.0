@@ -28,7 +28,7 @@ public class AIController : MonoBehaviour
         if (closestUnit)
         {
             // 1. Clear a circle with a radius of 30 around the base from all enemy units.
-            if (Vector3.Distance(closestUnit.transform.position, transform.position) < 30)
+            if (Vector3.Distance(closestUnit.transform.position, ownBase.transform.position) < 30)
             {
                 SendTroopsAgainst(closestUnit);
             }
@@ -53,7 +53,7 @@ public class AIController : MonoBehaviour
 
         foreach (Unit enemyUnit in enemyUnits)
         {
-            float distance = Vector3.Distance(transform.position, enemyUnit.transform.position);
+            float distance = Vector3.Distance(ownBase.transform.position, enemyUnit.transform.position);
             if (distance < clostestDistance)
             {
                 clostestDistance = distance;
