@@ -634,7 +634,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 56518538}
         m_TargetAssemblyTypeName: Base, Assembly-CSharp
-        m_MethodName: GenerateSoldier
+        m_MethodName: BuildSoldier
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1509,7 +1509,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 56518538}
         m_TargetAssemblyTypeName: Base, Assembly-CSharp
-        m_MethodName: GenerateArcher
+        m_MethodName: BuildArcher
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2360,7 +2360,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 56518538}
         m_TargetAssemblyTypeName: Base, Assembly-CSharp
-        m_MethodName: GenerateLancer
+        m_MethodName: BuildLancer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

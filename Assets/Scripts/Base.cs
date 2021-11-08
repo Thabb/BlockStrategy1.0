@@ -89,6 +89,31 @@ public class Base : HealthEntity
         }
     }
 
+    /// <summary>
+    /// Only exists as a callable function for buttons.
+    /// </summary>
+    /// <remarks>Yes, this is ugly!</remarks>
+    public void BuildSoldier()
+    {
+        GenerateSoldier();
+    }
+    /// <summary>
+    /// Only exists as a callable function for buttons.
+    /// </summary>
+    /// <remarks>Yes, this is ugly!</remarks>
+    public void BuildArcher()
+    {
+        GenerateArcher();
+    }
+    /// <summary>
+    /// Only exists as a callable function for buttons.
+    /// </summary>
+    /// <remarks>Yes, this is ugly!</remarks>
+    public void BuildLancer()
+    {
+        GenerateLancer();
+    }
+
     public void ChangeGoldAmount(float gold)
     {
         Gold += gold;
