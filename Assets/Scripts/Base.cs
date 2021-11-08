@@ -33,44 +33,6 @@ public class Base : HealthEntity
             }
         }
     }
-    
-    private void Update()
-    {
-        UnitGeneration();
-    }
-
-    private void UnitGeneration()
-    {
-        // check if spawn position is free
-        // the position is the position in front of the the base, slightly offset on the y-axis to avoid spawning in the ground
-        if (Physics.CheckSphere((transform.position + transform.forward * 5) + new Vector3(0, 1, 0), 0.1f)) return;
-        
-        // spawn a soldier if the button was pressed
-        if (team == 1 && Input.GetButtonDown("BuildSoldier"))
-        {
-            GenerateSoldier();
-        }
-        else if (team == 1 && Input.GetButtonDown("BuildArcher"))
-        {
-            GenerateArcher();
-        }
-        else if (team == 1 && Input.GetButtonDown("BuildLancer"))
-        {
-            GenerateLancer();
-        }
-        else if (team == 2 && Input.GetKeyDown(KeyCode.A))
-        {
-            GenerateSoldier();
-        }
-        else if (team == 2 && Input.GetKeyDown(KeyCode.S))
-        {
-            GenerateArcher();
-        }
-        else if (team == 2 && Input.GetKeyDown(KeyCode.D))
-        {
-            GenerateLancer();
-        }
-    }
 
     public void GenerateSoldier()
     {
