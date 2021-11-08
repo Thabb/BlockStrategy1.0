@@ -39,7 +39,7 @@ public class Base : HealthEntity
     {
         // check if spawn position is free
         // the position is the position in front of the the base, slightly offset on the y-axis to avoid spawning in the ground
-        if (Physics.CheckSphere((transform.position + transform.forward * 5) + new Vector3(0, 1, 0), 0.1f)) return;
+        if (Physics.CheckSphere((transform.position + transform.forward * 5) + new Vector3(0, 1, 0), 0.1f)) return false;
         
         if (Gold >= 30)
         {
@@ -57,7 +57,7 @@ public class Base : HealthEntity
     {
         // check if spawn position is free
         // the position is the position in front of the the base, slightly offset on the y-axis to avoid spawning in the ground
-        if (Physics.CheckSphere((transform.position + transform.forward * 5) + new Vector3(0, 1, 0), 0.1f)) return;
+        if (Physics.CheckSphere((transform.position + transform.forward * 5) + new Vector3(0, 1, 0), 0.1f)) return false;
         
         if (Gold >= 50)
         {
@@ -75,7 +75,7 @@ public class Base : HealthEntity
     {
         // check if spawn position is free
         // the position is the position in front of the the base, slightly offset on the y-axis to avoid spawning in the ground
-        if (Physics.CheckSphere((transform.position + transform.forward * 5) + new Vector3(0, 1, 0), 0.1f)) return;
+        if (Physics.CheckSphere((transform.position + transform.forward * 5) + new Vector3(0, 1, 0), 0.1f)) return false;
         
         if (Gold >= 60)
         {
