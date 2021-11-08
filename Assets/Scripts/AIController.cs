@@ -1,19 +1,24 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AIController : MonoBehaviour
 {
     public Base enemyBase;
+    public Base ownBase;
     
     private List<Unit> ownUnits = new List<Unit>();
     private List<Unit> enemyUnits = new List<Unit>();
 
     private Tuple<Vector3, Vector3> dangerZone = new Tuple<Vector3, Vector3>(new Vector3(80,0,-45), new Vector3(-50,0,45));
     
+    private String nextUnitToBuild = "Soldier";
+
     private void Update()
     {
         DecisionMaking();
+        UnitBuilding();
     }
 
     private void DecisionMaking()
@@ -113,5 +118,26 @@ public class AIController : MonoBehaviour
     public void RemoveEnemyUnit(Unit unit)
     {
         enemyUnits.Remove(unit);
+    }
+
+    private void UnitBuilding()
+    {
+        switch (nextUnitToBuild)
+        {
+            case "Soldier":
+                if (ownBase.GenerateSoldier()) nextUnitToBuild = FindNextUnitToBuild();
+                break; 
+            case "Archer":
+                if (ownBase.GenerateArcher()) nextUnitToBuild = FindNextUnitToBuild();
+                break;
+            case "Lancer":
+                if (ownBase.GenerateLancer()) nextUnitToBuild = FindNextUnitToBuild();
+                break;
+        }
+    }
+
+    private string FindNextUnitToBuild()
+    {
+        return "Soldier";
     }
 }
