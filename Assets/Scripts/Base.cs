@@ -89,7 +89,7 @@ public class Base : HealthEntity
     public void ChangeGoldAmount(float gold)
     {
         Gold += gold;
-        goldCounter.text = "Gold: " + Gold;
+        if (team == 1) goldCounter.text = "Gold: " + Gold;
     }
     
     private void OnDestroy()
