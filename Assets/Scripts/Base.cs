@@ -74,6 +74,10 @@ public class Base : HealthEntity
 
     public void GenerateSoldier()
     {
+        // check if spawn position is free
+        // the position is the position in front of the the base, slightly offset on the y-axis to avoid spawning in the ground
+        if (Physics.CheckSphere((transform.position + transform.forward * 5) + new Vector3(0, 1, 0), 0.1f)) return;
+        
         if (Gold >= 30)
         {
             Instantiate(soldierPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0), Quaternion.identity);
@@ -87,6 +91,10 @@ public class Base : HealthEntity
     
     public void GenerateArcher()
     {
+        // check if spawn position is free
+        // the position is the position in front of the the base, slightly offset on the y-axis to avoid spawning in the ground
+        if (Physics.CheckSphere((transform.position + transform.forward * 5) + new Vector3(0, 1, 0), 0.1f)) return;
+        
         if (Gold >= 50)
         {
             Instantiate(archerPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0), Quaternion.identity);
@@ -100,6 +108,10 @@ public class Base : HealthEntity
     
     public void GenerateLancer()
     {
+        // check if spawn position is free
+        // the position is the position in front of the the base, slightly offset on the y-axis to avoid spawning in the ground
+        if (Physics.CheckSphere((transform.position + transform.forward * 5) + new Vector3(0, 1, 0), 0.1f)) return;
+        
         if (Gold >= 60)
         {
             Instantiate(lancerPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0), Quaternion.identity);
