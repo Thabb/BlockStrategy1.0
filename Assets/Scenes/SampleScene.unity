@@ -1219,6 +1219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyBase: {fileID: 56518538}
+  ownBase: {fileID: 843036313}
 --- !u!1 &843036308
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,7 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class AIController : MonoBehaviour
 {
@@ -136,8 +136,65 @@ public class AIController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Decides which Unit should be build next, after an unit was build
+    /// </summary>
+    /// <remarks>
+    /// Decision making: Based on the distance the closest enemy unit has to the base.
+    /// If there are enemies in a radius of under 20, soldiers/lancers will be build 50/50.
+    /// If there are enemies outside of that radius soldiers/archers will be build 50/50.
+    /// And if there are no more enemy units but the base, only archers will be build to block in the enemy.
+    /// To top this of with some randomization, 1/3 of the units will always be build by chance.
+    /// </remarks>
+    /// <returns></returns>
     private string FindNextUnitToBuild()
     {
-        return "Soldier";
+        float random = Random.value;
+        if (random > 0.33)
+        {
+            Unit closestUnit = GetClosestEnemyUnit();
+
+            // if there are no enemy units, just spam archers and block the enemy in
+            if (!closestUnit) return "Archer";
+            
+            // check if there is an unit near to the base, if yes build soldiers/lancers
+            if (Vector3.Distance(closestUnit.transform.position, ownBase.transform.position) <= 20)
+            {
+                if (random > 0.66)
+                {
+                    return "Soldier";
+                }
+                else
+                {
+                    return "Lancer";
+                }
+            }
+            else // if there is no unit close to the base build soldiers/archers
+            {
+                if (random > 0.66)
+                {
+                    return "Soldier";
+                }
+                else
+                {
+                    return "Archer";
+                }
+            }
+        }
+        else // randomization, 1/3 chance to build whatever
+        {
+            if (random > 0.22)
+            {
+                return "Soldier";
+            } 
+            else if (random > 0.11)
+            {
+                return "Archer";
+            } 
+            else
+            {
+                return "Lancer";
+            }
+        }
     }
 }
