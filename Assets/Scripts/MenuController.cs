@@ -13,17 +13,9 @@ namespace Menu
     /// </remarks>
     public class MenuController : MonoBehaviour
     {
-        private GameObject _mainMenu;
+        public  GameObject mainMenu;
 
         public List<GameObject> menuList = new List<GameObject>();
-
-        /// <summary>
-        /// In this function the main menu or pause menu is referenced. This is the menu that you want to be opened and closed by the Esc key.
-        /// </summary>
-        private void Start()
-        {
-            _mainMenu = transform.GetChild(0).gameObject;
-        }
 
         /// <summary>
         /// The Update function manages the opening and closing of the main menu by pressing Esc.
@@ -41,7 +33,7 @@ namespace Menu
                 }
                 else
                 {
-                    Open(_mainMenu);
+                    Open(mainMenu);
                 }
             }
         }
