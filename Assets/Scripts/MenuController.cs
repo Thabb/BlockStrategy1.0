@@ -66,7 +66,7 @@ namespace Menu
         /// <remarks>
         /// Use this function if you wanna close an already open menu. As in the button that closes a certain menu.
         /// </remarks>
-        /// <param name="menu">The gameobject if the menu you want to close.</param>
+        /// <param name="menu">The gameobject of the menu you want to close.</param>
         public void Close(GameObject menu)
         {
             menu.SetActive(false);
