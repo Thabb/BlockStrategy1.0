@@ -41,14 +41,12 @@ namespace Health
         public bool GenerateSoldier()
         {
             // check if spawn position is free
-            // the position is the position in front of the the base, slightly offset on the y-axis to avoid spawning in the ground
-            if (Physics.CheckSphere((transform.position + transform.forward * 5) + new Vector3(0, 1, 0), 0.1f))
-                return false;
+            Vector3 checkPosition = GetUnitGenerationPosition();
+            if (checkPosition == new Vector3()) return false;
 
             if (Gold >= 30)
             {
-                Instantiate(soldierPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0),
-                    Quaternion.identity);
+                Instantiate(soldierPrefab, checkPosition, Quaternion.identity);
                 ChangeGoldAmount(-30);
                 return true;
             }
@@ -61,14 +59,12 @@ namespace Health
         public bool GenerateArcher()
         {
             // check if spawn position is free
-            // the position is the position in front of the the base, slightly offset on the y-axis to avoid spawning in the ground
-            if (Physics.CheckSphere((transform.position + transform.forward * 5) + new Vector3(0, 1, 0), 0.1f))
-                return false;
+            Vector3 checkPosition = GetUnitGenerationPosition();
+            if (checkPosition == new Vector3()) return false;
 
             if (Gold >= 50)
             {
-                Instantiate(archerPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0),
-                    Quaternion.identity);
+                Instantiate(archerPrefab, checkPosition, Quaternion.identity);
                 ChangeGoldAmount(-50);
                 return true;
             }
@@ -81,14 +77,12 @@ namespace Health
         public bool GenerateLancer()
         {
             // check if spawn position is free
-            // the position is the position in front of the the base, slightly offset on the y-axis to avoid spawning in the ground
-            if (Physics.CheckSphere((transform.position + transform.forward * 5) + new Vector3(0, 1, 0), 0.1f))
-                return false;
+            Vector3 checkPosition = GetUnitGenerationPosition();
+            if (checkPosition == new Vector3()) return false;
 
             if (Gold >= 60)
             {
-                Instantiate(lancerPrefab, (transform.position + transform.forward * 5) + new Vector3(0, 1, 0),
-                    Quaternion.identity);
+                Instantiate(lancerPrefab, checkPosition, Quaternion.identity);
                 ChangeGoldAmount(-60);
                 return true;
             }
@@ -96,6 +90,21 @@ namespace Health
             {
                 return false;
             }
+        }
+
+        private Vector3 GetUnitGenerationPosition()
+        {
+            Vector3 checkPosition;
+            for (float turnDegrees = 0; turnDegrees < 360; turnDegrees += 18)
+            {
+                checkPosition = (transform.position + (Quaternion.Euler(0, turnDegrees, 0) * transform.forward * 5)) + new Vector3(0, 1, 0);
+                if (!Physics.CheckSphere(checkPosition, 0.1f))
+                {
+                    return checkPosition;
+                }
+            }
+
+            return new Vector3();
         }
 
         /// <summary>
