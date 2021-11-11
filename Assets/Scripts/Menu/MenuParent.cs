@@ -10,6 +10,9 @@ namespace Menu
     /// </remarks>
     public class MenuParent : MonoBehaviour
     {
+        /// <summary>
+        /// Reference to the MenuController in the scene.
+        /// </summary>
         internal MenuController MenuController;
 
         /// <summary>

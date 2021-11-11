@@ -18,6 +18,9 @@ namespace Menu
             MenuController.Close(gameObject);
         }
 
+        /// <summary>
+        /// Quits the application and thus end the game.
+        /// </summary>
         public void ExitButton()
         {
             Application.Quit();

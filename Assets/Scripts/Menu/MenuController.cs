@@ -13,9 +13,15 @@ namespace Menu
     /// </remarks>
     public class MenuController : MonoBehaviour
     {
+        /// <summary>
+        /// Reference the the menu that should be opened by the Escape key.
+        /// </summary>
         public  GameObject mainMenu;
 
-        public List<GameObject> menuList = new List<GameObject>();
+        /// <summary>
+        /// A list of currently active menus. The Open and Close methods manage this list.
+        /// </summary>
+        private readonly List<GameObject> _menuList = new List<GameObject>();
 
         /// <summary>
         /// The Update function manages the opening and closing of the main menu by pressing Esc.
@@ -27,9 +33,9 @@ namespace Menu
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (menuList.Any())
+                if (_menuList.Any())
                 {
-                    Close(menuList.ElementAt(menuList.Count - 1));
+                    Close(_menuList.ElementAt(_menuList.Count - 1));
                 }
                 else
                 {
@@ -50,12 +56,12 @@ namespace Menu
         /// <param name="menu">The gameobject of the menu you want to open.</param>
         public void Open(GameObject menu)
         {
-            if (menuList.Any())
+            if (_menuList.Any())
             {
-                menuList.ElementAt(menuList.Count - 1).SetActive(false);
+                _menuList.ElementAt(_menuList.Count - 1).SetActive(false);
             }
             
-            menuList.Add(menu);
+            _menuList.Add(menu);
             menu.SetActive(true);
             Time.timeScale = 0;
         }
@@ -70,11 +76,11 @@ namespace Menu
         public void Close(GameObject menu)
         {
             menu.SetActive(false);
-            menuList.Remove(menu);
+            _menuList.Remove(menu);
 
-            if (menuList.Any())
+            if (_menuList.Any())
             {
-                menuList.ElementAt(menuList.Count - 1).SetActive(true);
+                _menuList.ElementAt(_menuList.Count - 1).SetActive(true);
             }
             else
             {
