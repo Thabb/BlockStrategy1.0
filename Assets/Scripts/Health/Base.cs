@@ -184,8 +184,6 @@ namespace Health
             {
                 Debug.Log("YOU WON!");
             }
-
-            Application.Quit();
         }
     }
 }
