@@ -19,6 +19,9 @@ namespace Controller
             new Tuple<Vector3, Vector3>(new Vector3(80, 0, -45), new Vector3(-50, 0, 45));
 
         private String nextUnitToBuild = "Soldier";
+        
+        public List<ResourcePoint> nearResourcePoints;
+        public List<ResourcePoint> farResourcePoints;
 
         private void Update()
         {
@@ -29,6 +32,8 @@ namespace Controller
         private void DecisionMaking()
         {
             Unit closestUnit = GetClosestEnemyUnit();
+            ResourcePoint nextNearResourcePoint = GetNextNearResourcePoint();
+            ResourcePoint nextFarResourcePoint = GetNextFarResourcePoint();
 
             if (closestUnit)
             {
@@ -37,7 +42,12 @@ namespace Controller
                 {
                     SendTroopsAgainst(closestUnit);
                 }
-                // 2. Clear the danger zone from all enemy units.
+                // 2. Conquer the near resource points (behind the own base and in the middle, in that order).
+                else if (nextNearResourcePoint)
+                {
+                    SendTroopsToPosition(nextNearResourcePoint.transform.position);
+                }
+                // 3. Clear the danger zone from all enemy units.
                 else if (closestUnit.transform.position.x < dangerZone.Item1.y &&
                          closestUnit.transform.position.x > dangerZone.Item2.x &&
                          closestUnit.transform.position.z > dangerZone.Item1.z &&
@@ -46,8 +56,12 @@ namespace Controller
                     SendTroopsAgainst(closestUnit);
                 }
             }
-
-            // 3. Attack the enemy base.
+            // 4. Conquer the resource points behind the enemy base.
+            else if (nextFarResourcePoint)
+            {
+                SendTroopsToPosition(nextFarResourcePoint.transform.position);
+            }
+            // 4. Attack the enemy base.
             else
             {
                 SendTroopsAgainst(enemyBase);
@@ -128,6 +142,25 @@ namespace Controller
         public void RemoveEnemyUnit(Unit unit)
         {
             enemyUnits.Remove(unit);
+        }
+
+        private ResourcePoint GetNextNearResourcePoint()
+        {
+            foreach (ResourcePoint rPoint in nearResourcePoints)
+            {
+                if (rPoint.ownerTeam != 2) return rPoint;
+            }
+
+            return null;
+        }
+        private ResourcePoint GetNextFarResourcePoint()
+        {
+            foreach (ResourcePoint rPoint in farResourcePoints)
+            {
+                if (rPoint.ownerTeam != 2) return rPoint;
+            }
+
+            return null;
         }
 
         private void UnitBuilding()
