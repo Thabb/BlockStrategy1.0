@@ -34,34 +34,32 @@ namespace Controller
             Unit closestUnit = GetClosestEnemyUnit();
             ResourcePoint nextNearResourcePoint = GetNextNearResourcePoint();
             ResourcePoint nextFarResourcePoint = GetNextFarResourcePoint();
-
-            if (closestUnit)
+            
+            // 1. Clear a circle with a radius of 30 around the base from all enemy units.
+            if (closestUnit && Vector3.Distance(closestUnit.transform.position, ownBase.transform.position) < 30)
             {
-                // 1. Clear a circle with a radius of 30 around the base from all enemy units.
-                if (Vector3.Distance(closestUnit.transform.position, ownBase.transform.position) < 30)
-                {
-                    SendTroopsAgainst(closestUnit);
-                }
-                // 2. Conquer the near resource points (behind the own base and in the middle, in that order).
-                else if (nextNearResourcePoint)
-                {
-                    SendTroopsToPosition(nextNearResourcePoint.transform.position);
-                }
-                // 3. Clear the danger zone from all enemy units.
-                else if (closestUnit.transform.position.x < dangerZone.Item1.y &&
-                         closestUnit.transform.position.x > dangerZone.Item2.x &&
-                         closestUnit.transform.position.z > dangerZone.Item1.z &&
-                         closestUnit.transform.position.z < dangerZone.Item2.z)
-                {
-                    SendTroopsAgainst(closestUnit);
-                }
+                SendTroopsAgainst(closestUnit);
+            }
+            // 2. Conquer the near resource points (behind the own base and in the middle, in that order).
+            else if (nextNearResourcePoint)
+            {
+                SendTroopsToPosition(nextNearResourcePoint.transform.position);
+            }
+            // 3. Clear the danger zone from all enemy units.
+            else if (closestUnit && 
+                     closestUnit.transform.position.x < dangerZone.Item1.y &&
+                     closestUnit.transform.position.x > dangerZone.Item2.x &&
+                     closestUnit.transform.position.z > dangerZone.Item1.z &&
+                     closestUnit.transform.position.z < dangerZone.Item2.z)
+            {
+                SendTroopsAgainst(closestUnit);
             }
             // 4. Conquer the resource points behind the enemy base.
             else if (nextFarResourcePoint)
             {
                 SendTroopsToPosition(nextFarResourcePoint.transform.position);
             }
-            // 4. Attack the enemy base.
+            // 5. Attack the enemy base.
             else
             {
                 SendTroopsAgainst(enemyBase);
