@@ -88,23 +88,25 @@ namespace Controller
 
         private void SendTroopsToPosition(Vector3 destination)
         {
-            foreach (Unit ownUnit in ownUnits)
+            List<Unit> inactiveUnits = GetAllCurrentlyInactiveUnits();
+            foreach (Unit unit in inactiveUnits)
             {
                 // send unit on its way
-                ownUnit.destPoint = destination;
+                unit.destPoint = destination;
 
                 // get unit out of combat mode
-                ownUnit.isInCombat = false;
-                ownUnit.enemy = null;
+                unit.isInCombat = false;
+                unit.enemy = null;
             }
         }
 
         private void SendTroopsAgainst(HealthEntity enemy)
         {
-            foreach (Unit ownUnit in ownUnits)
+            List<Unit> inactiveUnits = GetAllCurrentlyInactiveUnits();
+            foreach (Unit unit in inactiveUnits)
             {
-                ownUnit.isInCombat = true;
-                ownUnit.enemy = enemy;
+                unit.isInCombat = true;
+                unit.enemy = enemy;
             }
         }
 
@@ -113,7 +115,7 @@ namespace Controller
             List<Unit> inactiveUnits = new List<Unit>();
             foreach (Unit ownUnit in ownUnits)
             {
-                if (!ownUnit.isInCombat)
+                if (!ownUnit.isInCombat && ownUnit.nav.remainingDistance < 1)
                 {
                     inactiveUnits.Add(ownUnit);
                 }
