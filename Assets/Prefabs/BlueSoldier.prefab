@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b1af1cf8b14cea44d8fb6fb94134f86c, type: 2}
+  - {fileID: 2100000, guid: 2d40adab99cb8bd4cab53a675feb9a10, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -153,7 +153,6 @@ MonoBehaviour:
   rb: {fileID: 1095964754971723562}
   nav: {fileID: 645437196835842448}
   destPoint: {x: 0, y: 0, z: 0}
-  playerInputController: {fileID: 0}
   isInCombat: 0
   enemy: {fileID: 0}
   enemiesInSight: []
