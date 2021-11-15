@@ -112,7 +112,11 @@ namespace Health
         {
             if (_lastAttackTime + attackSpeed <= DateTimeOffset.Now.ToUnixTimeSeconds())
             {
-                if (!enemy) return;
+                if (!enemy)
+                {
+                    isInCombat = false;
+                    return;
+                }
 
                 if (enemy is Unit)
                 {
