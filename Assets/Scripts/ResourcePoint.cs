@@ -22,6 +22,7 @@ public class ResourcePoint : MonoBehaviour
         StartCoroutine(GenerateResourcesForOwner());
 
         _colorRenderer = gameObject.GetComponent<Renderer>();
+        _colorRenderer.material.color = Color.green;
     }
 
     private void FixedUpdate()
