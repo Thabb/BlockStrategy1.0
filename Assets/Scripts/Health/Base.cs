@@ -16,6 +16,8 @@ namespace Health
         public float Gold { get; set; } = 0;
         public TMP_Text goldCounter;
 
+        public GameObject DestroyMessage;
+
         /// <summary>
         /// Starts the Coroutine for health regeneration and sets the amount of start gold.
         /// </summary>
@@ -175,15 +177,8 @@ namespace Health
         /// </summary>
         private void OnDestroy()
         {
-            // TODO: If one base was destroyed the game should end and depending on whos base its was the player will see a "You won" or "You lost" message (UI)
-            if (team == 1)
-            {
-                Debug.Log("YOU LOST!");
-            }
-            else if (team == 2)
-            {
-                Debug.Log("YOU WON!");
-            }
+            DestroyMessage.SetActive(true);
+            Time.timeScale = 0;
         }
     }
 }
