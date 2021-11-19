@@ -120,7 +120,7 @@ namespace Health
         {
             if (enemy)
             {
-                destPoint = enemy.transform.position;
+                destPoint = enemy.hitbox.ClosestPoint(transform.position);
             }
             else
             {

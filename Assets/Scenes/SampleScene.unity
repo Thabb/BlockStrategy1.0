@@ -545,6 +545,7 @@ MonoBehaviour:
   range: 20
   attackSpeed: 1
   team: 1
+  hitbox: {fileID: 56518534}
   soldierPrefab: {fileID: 1095964754971723564, guid: e9b7ec2bf5e5ad14a808f3a13a0573a7, type: 3}
   archerPrefab: {fileID: 7686410084174279023, guid: b0caa7cc79eaaa44e94abeea068ed7bf, type: 3}
   lancerPrefab: {fileID: 7398872971096892494, guid: 90f3f1197e42fa84d8f1b9230d36e8e7, type: 3}
@@ -1659,6 +1660,7 @@ MonoBehaviour:
   range: 20
   attackSpeed: 1
   team: 2
+  hitbox: {fileID: 843036309}
   soldierPrefab: {fileID: 1095964754971723564, guid: 954b279851b5be7418f608c035e40546, type: 3}
   archerPrefab: {fileID: 7686410084174279023, guid: 025545c5885a3bf45ad0802dba7ca058, type: 3}
   lancerPrefab: {fileID: 7398872971096892494, guid: df54e8542eb31854c8b0bb5c2125917f, type: 3}

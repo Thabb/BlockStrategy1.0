@@ -150,10 +150,10 @@ MonoBehaviour:
   range: 5
   attackSpeed: 1
   team: 1
+  hitbox: {fileID: 7398872971096892499}
   rb: {fileID: 7398872971096892492}
   nav: {fileID: 5485193711506936732}
   destPoint: {x: 0, y: 0, z: 0}
-  playerInputController: {fileID: 0}
   isInCombat: 0
   enemy: {fileID: 0}
   enemiesInSight: []

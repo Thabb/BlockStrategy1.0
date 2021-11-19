@@ -45,6 +45,12 @@ namespace Health
         private bool isAlive = true;
 
         /// <summary>
+        /// The collider on the entity that occupies exactly the space of the entity.
+        /// </summary>
+        /// <remarks>This only exists, so that Unit.Combat() can use it and doesn't need to do a GetComponent call every time.</remarks>
+        public Collider hitbox;
+
+        /// <summary>
         /// Initializes the healthbar, so it shows the correct numbers at the start of the game and not just after receiving damage for the first time.
         /// </summary>
         public void Start()
