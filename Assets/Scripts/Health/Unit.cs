@@ -93,6 +93,15 @@ namespace Health
             // if this ever causes problems, Physics.OverlapSphereNonAlloc might be worth a try. Documentation is severely lacking here though, so im not using it.
             Collider[] collidersAtUnitDestination = Physics.OverlapSphere(nav.destination, 0.1f);
 
+            // if any kind of enemy unit is found at the destination, you shall continue with walking there
+            foreach (var unitCollider in collidersAtUnitDestination)
+            {
+                if (unitCollider.TryGetComponent(out Unit unit))
+                {
+                    if (unit.team == 1) return;
+                }
+            }
+            
             foreach (var colliderAtDestination in collidersAtUnitDestination)
             {
                 if (colliderAtDestination.TryGetComponent(out ResourcePoint rPoint))
