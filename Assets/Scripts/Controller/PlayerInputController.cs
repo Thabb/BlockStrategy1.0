@@ -124,12 +124,26 @@ namespace Controller
                     // case: clicked on enemy unit or structure
                     else if ((hit.transform.gameObject.CompareTag("Unit") ||
                               hit.transform.gameObject.CompareTag("Structure")) &&
-                             entity.team != 0 && controlledUnits.Count != 0)
+                             entity.team != 1 && controlledUnits.Count != 0)
                     {
                         foreach (Unit unit in controlledUnits)
                         {
                             unit.isInCombat = true;
                             unit.enemy = entity;
+                        }
+                    }
+                    // case: clicked on an own unit or structure
+                    else if ((hit.transform.gameObject.CompareTag("Unit") ||
+                              hit.transform.gameObject.CompareTag("Structure")) &&
+                             entity.team == 1 && controlledUnits.Count != 0)
+                    {
+                        foreach (Unit unit in controlledUnits)
+                        {
+                            unit.destPoint = destination;
+                            
+                            // get unit out of combat mode
+                            unit.isInCombat = false;
+                            unit.enemy = null;
                         }
                     }
                 }
