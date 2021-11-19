@@ -43,7 +43,20 @@ namespace Controller
             // 2. Conquer the near resource points (behind the own base and in the middle, in that order).
             else if (nextNearResourcePoint)
             {
-                SendTroopsToPosition(nextNearResourcePoint.transform.position);
+                // 2.1 But before just walking towards the point, kill the enemy units on it first.
+                
+                // check for enemies on/near the point (function that returns an enemy)
+                Unit possibleEnemy = CheckForEnemiesOnResourcePoint(nextNearResourcePoint);
+                if (possibleEnemy)
+                {
+                    // attack that enemy
+                    SendTroopsAgainst(possibleEnemy);
+                }
+                else
+                {
+                    // only walk onto the point if its free of enemies
+                    SendTroopsToPosition(nextNearResourcePoint.transform.position);
+                }
             }
             // 3. Clear the danger zone from all enemy units.
             else if (closestUnit && 
@@ -57,7 +70,20 @@ namespace Controller
             // 4. Conquer the resource points behind the enemy base.
             else if (nextFarResourcePoint)
             {
-                SendTroopsToPosition(nextFarResourcePoint.transform.position);
+                // 4.1 TODO: But before just walking towards the point, kill the enemy units on it first.
+                
+                // check for enemies on/near the point (function that returns an enemy)
+                Unit possibleEnemy = CheckForEnemiesOnResourcePoint(nextFarResourcePoint);
+                if (possibleEnemy)
+                {
+                    // attack that enemy
+                    SendTroopsAgainst(possibleEnemy);
+                }
+                else
+                {
+                    // only walk onto the point if its free of enemies
+                    SendTroopsToPosition(nextFarResourcePoint.transform.position);
+                }
             }
             // 5. Attack the enemy base.
             else
@@ -163,6 +189,19 @@ namespace Controller
             return null;
         }
 
+        private Unit CheckForEnemiesOnResourcePoint(ResourcePoint resourcePoint)
+        {
+            foreach (var enemyUnit in enemyUnits)
+            {
+                if (Vector3.Distance(enemyUnit.transform.position, resourcePoint.transform.position) < 15)
+                {
+                    return enemyUnit;
+                }
+            }
+
+            return null;
+        }
+        
         private void UnitBuilding()
         {
             switch (nextUnitToBuild)
