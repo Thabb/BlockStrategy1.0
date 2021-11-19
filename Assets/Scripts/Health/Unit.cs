@@ -83,6 +83,28 @@ namespace Health
         private void Movement()
         {
             nav.destination = destPoint;
+            
+            if (team == 1) return;
+            // From here one follows a functionality to stop units from walking towards an already captured point.
+            // This functionality is only wanted for AI units, since it makes the work of the AI Controller more efficient.
+            // Its probably faulty and might belong into the AIController
+            if (transform.position == destPoint) return;
+
+            // if this ever causes problems, Physics.OverlapSphereNonAlloc might be worth a try. Documentation is severely lacking here though, so im not using it.
+            Collider[] collidersAtUnitDestination = Physics.OverlapSphere(nav.destination, 0.1f);
+
+            foreach (var colliderAtDestination in collidersAtUnitDestination)
+            {
+                if (colliderAtDestination.TryGetComponent(out ResourcePoint rPoint))
+                {
+                    // if this is true the destination lies inside the collider of a resource point.
+                    if (colliderAtDestination.ClosestPoint(nav.destination) == nav.destination && rPoint.ownerTeam == 2)
+                    {
+                        destPoint = transform.position;
+                    }
+                }
+            }
+            
         }
 
         private void Combat()
