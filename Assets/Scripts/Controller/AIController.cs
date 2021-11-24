@@ -26,11 +26,18 @@ namespace Controller
 
         private bool _firstCommandsPassed = false;
 
+        /// <summary>
+        /// Starts a Coroutine, that will handle the first few seconds of the game.
+        /// </summary>
         private void Start()
         {
             StartCoroutine(FirstCommands());
         }
 
+        /// <summary>
+        /// This method handles the first few seconds of the game and will make the AI send its first three units to the near resource points. Then the normal decision making will take over.
+        /// </summary>
+        /// <returns>IEnumerator</returns>
         private IEnumerator FirstCommands()
         {
             yield return new WaitForSeconds(1);
@@ -48,17 +55,9 @@ namespace Controller
             _firstCommandsPassed = true;
         }
 
-        private bool AreNearPointsCaptured()
-        {
-            bool result = true;
-            foreach (var point in nearResourcePoints)
-            {
-                if (point.ownerTeam != 2) result = false;
-            }
-
-            return result;
-        }
-        
+        /// <summary>
+        /// Calls the methods for decision making and unit building.
+        /// </summary>
         private void Update()
         {
             if (_firstCommandsPassed)
@@ -68,6 +67,10 @@ namespace Controller
             UnitBuilding();
         }
 
+        /// <summary>
+        /// The heart of this AIController. Here all decisions throughout the game are made.
+        /// </summary>
+        /// <remarks>The AI has a list of priorities. They are marked in the code with comments as well as properly explained in an wiki article in the Github repository.</remarks>
         private void DecisionMaking()
         {
             Unit closestUnit = GetClosestEnemyUnit();
@@ -130,7 +133,11 @@ namespace Controller
                 SendTroopsAgainst(enemyBase);
             }
         }
-
+        
+        /// <summary>
+        /// This method gets called the get the closest enemy/player unit.
+        /// </summary>
+        /// <returns>The enemy/player unit which is closest to the AIs base.</returns>
         private Unit GetClosestEnemyUnit()
         {
             Unit closestUnit = null;
@@ -151,6 +158,10 @@ namespace Controller
             return closestUnit;
         }
 
+        /// <summary>
+        /// Sends all currently inactive AI troops to a point on the map.
+        /// </summary>
+        /// <param name="destination">The point on the map the units should head towards.</param>
         private void SendTroopsToPosition(Vector3 destination)
         {
             List<Unit> inactiveUnits = GetAllCurrentlyInactiveUnits();
@@ -165,6 +176,10 @@ namespace Controller
             }
         }
 
+        /// <summary>
+        /// Sends all currently inactive AI troops against a specific enemy.
+        /// </summary>
+        /// <param name="enemy">Reference to the enemy that should be attacked.</param>
         private void SendTroopsAgainst(HealthEntity enemy)
         {
             List<Unit> inactiveUnits = GetAllCurrentlyInactiveUnits();
@@ -175,6 +190,11 @@ namespace Controller
             }
         }
 
+        /// <summary>
+        /// Determines a list of all currently inactive units.
+        /// </summary>
+        /// <remarks>Inactive means, that the unit is currently not moving and not in combat.</remarks>
+        /// <returns>List of the currently inactive units.</returns>
         private List<Unit> GetAllCurrentlyInactiveUnits()
         {
             List<Unit> inactiveUnits = new List<Unit>();
@@ -189,26 +209,47 @@ namespace Controller
             return inactiveUnits;
         }
 
+        /// <summary>
+        /// Helper function that adds a unit to the AIs list of own units.
+        /// </summary>
+        /// <param name="unit">The unit that should be added to the list.</param>
         public void AddOwnUnit(Unit unit)
         {
             ownUnits.Add(unit);
         }
 
+        /// <summary>
+        /// Helper function that removes a unit to the AIs list of own units.
+        /// </summary>
+        /// <param name="unit">The unit that should be removed from the list.</param>
         public void RemoveOwnUnit(Unit unit)
         {
             ownUnits.Remove(unit);
         }
 
+        /// <summary>
+        /// Helper function that adds a unit to the AIs list of enemy units.
+        /// </summary>
+        /// <param name="unit">The unit that should be added to the list.</param>
         public void AddEnemyUnit(Unit unit)
         {
             enemyUnits.Add(unit);
         }
 
+        /// <summary>
+        /// Helper function that removes a unit to the AIs list of enemy units.
+        /// </summary>
+        /// <param name="unit">The unit that should be removed from the list.</param>
         public void RemoveEnemyUnit(Unit unit)
         {
             enemyUnits.Remove(unit);
         }
 
+        /// <summary>
+        /// Checks for a not captured resource point near the AI base.
+        /// </summary>
+        /// <remarks>The near resource points are the ones behind the AI base and the one in the middle. </remarks>
+        /// <returns>The resource point that should be captured next.</returns>
         private ResourcePoint GetNextNearResourcePoint()
         {
             foreach (ResourcePoint rPoint in nearResourcePoints)
@@ -218,6 +259,12 @@ namespace Controller
 
             return null;
         }
+        
+        /// <summary>
+        /// Checks for a not captured resource point near the player base.
+        /// </summary>
+        /// <remarks>The near resource points are the ones behind the player base. </remarks>
+        /// <returns>The resource point that should be captured next.</returns>
         private ResourcePoint GetNextFarResourcePoint()
         {
             foreach (ResourcePoint rPoint in farResourcePoints)
@@ -228,6 +275,12 @@ namespace Controller
             return null;
         }
 
+        /// <summary>
+        /// Checks if there are enemies on a resource point.
+        /// </summary>
+        /// <remarks>If there are indeed enemies on a point, those enemies should be killed first.</remarks>
+        /// <param name="resourcePoint"></param>
+        /// <returns>The first enemy unit on the resource point.</returns>
         private Unit CheckForEnemiesOnResourcePoint(ResourcePoint resourcePoint)
         {
             foreach (var enemyUnit in enemyUnits)
@@ -241,6 +294,10 @@ namespace Controller
             return null;
         }
         
+        /// <summary>
+        /// Builds the unit that is next in line to be build.
+        /// </summary>
+        /// <remarks>The logic that determines which unit should be build next is AIController.FindNExtUnitToBuild()</remarks>
         private void UnitBuilding()
         {
             switch (nextUnitToBuild)
