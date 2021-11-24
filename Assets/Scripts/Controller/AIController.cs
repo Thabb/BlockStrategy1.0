@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Health;
 using UnityEngine;
@@ -23,9 +24,47 @@ namespace Controller
         public List<ResourcePoint> nearResourcePoints;
         public List<ResourcePoint> farResourcePoints;
 
+        private bool _firstCommandsPassed = false;
+
+        private void Start()
+        {
+            StartCoroutine(FirstCommands());
+        }
+
+        private IEnumerator FirstCommands()
+        {
+            yield return new WaitForSeconds(1);
+            while (ownUnits.Count < 3)
+            {
+                // Do nothing
+            }
+            ownUnits[0].destPoint = nearResourcePoints[1].transform.position;
+            ownUnits[1].destPoint = nearResourcePoints[2].transform.position;
+            ownUnits[2].destPoint = nearResourcePoints[0].transform.position;
+            
+            // TODO: Here could be the lines to make the AI send all it units to the middle until all three beginning points are captured, but I think this version of the AI will simply be to strong to have a fund gaming experience.
+
+            yield return new WaitForSeconds(7);
+            _firstCommandsPassed = true;
+        }
+
+        private bool AreNearPointsCaptured()
+        {
+            bool result = true;
+            foreach (var point in nearResourcePoints)
+            {
+                if (point.ownerTeam != 2) result = false;
+            }
+
+            return result;
+        }
+        
         private void Update()
         {
-            DecisionMaking();
+            if (_firstCommandsPassed)
+            {
+                DecisionMaking();
+            }
             UnitBuilding();
         }
 
