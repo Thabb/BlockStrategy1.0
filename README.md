@@ -21,8 +21,9 @@ damage = (attack/armor) * 10
  <tr> <th>Soldier</th> <td>20</td> <td>10</td> <td>1</td> <td>100</td><td>1</td> <td>5</td></tr>
  <tr> <th>Archer</th> <td>15</td> <td>5</td> <td>20</td> <td>50</td><td>1,5</td> <td>3.5</td></tr>
  <tr> <th>Lancer</th> <td>10</td> <td>20</td> <td>5</td> <td>150</td><td>1</td> <td>4</td></tr>
- <tr> <th>Base</th> <td>(50)</td> <td>10</td> <td>(20)</td> <td>5000</td><td>1</td> <td>-</td></tr>
+ <tr> <th>Base</th> <td>(50)</td> <td>10</td> <td>(20)</td> <td>5000</td><td>(1)</td> <td>-</td></tr>
 </table>
+One might notice that the base has stats for attack, range and attackspeed, but it can't even attack. I thought about giving the base the ability to shoot at enemys. But I didn't feel it. It wouldn't be difficult to implement this, but since this is a learning project I didn't see the neccessity.
 
 ### Resource points
 The resource points in the corner of the map generate 5 gold/second and the one in the middle generates 10 gold/second.
