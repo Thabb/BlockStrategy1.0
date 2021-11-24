@@ -27,6 +27,9 @@ namespace Health
 
         public List<Unit> enemiesInSight = new List<Unit>();
 
+        /// <summary>
+        /// Adds this unit to some lists of the player and AI controller, depending on which side it is.
+        /// </summary>
         private new void Start()
         {
             base.Start();
@@ -48,6 +51,9 @@ namespace Health
             }
         }
 
+        /// <summary>
+        /// Calls the Combat and Movement methods depending on if the unit is in combat or not.
+        /// </summary>
         private void FixedUpdate()
         {
             if (isInCombat)
@@ -61,6 +67,10 @@ namespace Health
 
         }
 
+        /// <summary>
+        /// If another unit enters the range of this unit it will be checks and added to a list of enemies in the perimeter.
+        /// </summary>
+        /// <param name="other">The collider of the entering unit</param>
         private void OnTriggerEnter(Collider other)
         {
             if (other.isTrigger) return;
@@ -73,13 +83,23 @@ namespace Health
 
             CheckForEnemiesNearYou();
         }
-
+        
+        /// <summary>
+        /// If another unit exits the range of this unit it will be removed from the list of enemies in the perimeter.
+        /// </summary>
+        /// <param name="other">The collider of the exiting unit.</param>
         private void OnTriggerExit(Collider other)
         {
             Unit exit = other.transform.GetComponent<Unit>();
             enemiesInSight.Remove(exit);
         }
 
+        /// <summary>
+        /// This method handles movement. Also its responsible for a functionality of the AI (remarks).
+        /// </summary>
+        /// <remarks>The AI has the functionality to first check for units on a point before capturing it and attack them first.
+        /// This is something the player does naturally and an AI without it is pretty useless.</remarks>
+        /// Only the first line of this method is the one that manages movement. All other lines are for this functionality.
         private void Movement()
         {
             nav.destination = destPoint;
@@ -116,6 +136,9 @@ namespace Health
             
         }
 
+        /// <summary>
+        /// If the unit has a set enemy it will walk towards it. If the enemy is already in range it will stop walking and attack the enemy instead.
+        /// </summary>
         private void Combat()
         {
             if (enemy)
@@ -139,6 +162,9 @@ namespace Health
             }
         }
 
+        /// <summary>
+        /// The unit attacks its enemy with the given attack speed. This varies if the enemy is a unit or a base.
+        /// </summary>
         private void Attack()
         {
             if (_lastAttackTime + attackSpeed <= DateTimeOffset.Now.ToUnixTimeSeconds())
@@ -163,22 +189,32 @@ namespace Health
             }
         }
 
+        /// <summary>
+        /// This method is called if the unit receives damage from another unit.
+        /// </summary>
+        /// <remarks>The damage is dealt by calling HealthEntity.TakeDamage(), more there.
+        /// Also if the unit is not in combat and not moving it is set into combat mode against its attacker.</remarks>
+        /// <param name="attacker"></param>
+        /// <param name="damage"></param>
         public void TakeDamage(Unit attacker, float damage)
         {
-            // TODO: include proper damage calculation
             base.TakeDamage(damage);
 
-            if (!isInCombat)
+            // before the unit is set into combat mode it is checked if the unit has a pending movement command
+            // if so, its not set into combat mode until this path is complete
+            if (!isInCombat && !IsMoving())
             {
-                // before the unit is set into combat mode it is checked if the unit has a pending movement command
-                // if so, its not set into combat mode until this path is complete
-                if (!IsMoving())
-                {
-                    StartCoroutine(SetIntoCombat(attacker));
-                }
+                StartCoroutine(SetIntoCombat(attacker));
             }
         }
 
+        /// <summary>
+        /// Sets the unit into combat against its attacker after a half second delay.
+        /// </summary>
+        /// <remarks>The only cause for the half second delay is so that it wont strike back immediately. So that the
+        /// attacker always wins a fight.</remarks>
+        /// <param name="attacker">Reference to the attacking unit.</param>
+        /// <returns>IEnumerator</returns>
         private IEnumerator SetIntoCombat(Unit attacker)
         {
             yield return new WaitForSeconds(0.5f);
@@ -186,6 +222,9 @@ namespace Health
             enemy = attacker;
         }
 
+        /// <summary>
+        /// If this unit is destroyed it should be removed from the list of the player and AI controller that is was placed in during Start().
+        /// </summary>
         private void OnDestroy()
         {
             // if this is a player unit, remove it from the list of active units
@@ -200,11 +239,18 @@ namespace Health
             }
         }
 
+        /// <summary>
+        /// Determines if this unit is moving or not.
+        /// </summary>
+        /// <returns>Is the unit moving (true) or not (false).</returns>
         private bool IsMoving()
         {
             return !(nav.remainingDistance <= nav.stoppingDistance + 1);
         }
 
+        /// <summary>
+        /// Checks if there are enemies inside the units range and attacks them if so.
+        /// </summary>
         private void CheckForEnemiesNearYou()
         {
             if (IsMoving()) return;
