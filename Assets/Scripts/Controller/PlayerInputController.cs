@@ -18,16 +18,32 @@ namespace Controller
 
         private Camera _mainCam;
 
+        /// <summary>
+        /// Initializes a reference to the main camera for further use.
+        /// </summary>
         void Start()
         {
             _mainCam = Camera.main;
         }
 
+        /// <summary>
+        /// Calls the main method.
+        /// </summary>
         void Update()
         {
             MouseClicks();
         }
 
+        /// <summary>
+        /// The main method of the PlayerInputController. It handles left-click, right-click and drag select.
+        /// </summary>
+        /// <remarks>A single left mouse click marks a single unit.
+        /// Pressing down the left mouse marks a corner for the drag box, releasing it marks the other. While the mouse
+        /// is being pressed the dragbox changes its visual dimension. This has no effect on the select functionality.
+        /// The controller has a list of all currently existing player units and then searches that list for units inside the drag box.
+        /// With a right click the controlled units are send somewhere. The controller differentiates between a right-click
+        /// on an enemy, an own unit, the enemy base, the own base and a click on open ground and acts accordingly.
+        /// There are plenty of comments inside that code that mark the beginnings of the different sections.</remarks>
         private void MouseClicks()
         {
             // left mouse click
@@ -151,11 +167,19 @@ namespace Controller
 
         }
 
+        /// <summary>
+        /// Adds a unit the list of currently controlled units.
+        /// </summary>
+        /// <param name="unit">The unit that should be added to the list.</param>
         public void AddActiveUnit(Unit unit)
         {
             _activeUnits.Add(unit);
         }
 
+        /// <summary>
+        /// Removes a unit the list of currently controlled units.
+        /// </summary>
+        /// <param name="unit">The unit that should be removed from the list.</param>
         public void RemoveActiveUnit(Unit unit)
         {
             _activeUnits.Remove(unit);
